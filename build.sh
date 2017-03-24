@@ -240,7 +240,7 @@ doCompile()
     fi
     
     if [ "$OS" = "$WIN" ]; then
-        ${VBNC_BIN} ${VBNC_FLAGS} ${PLATFORM_FLAGS} ${VB_FLAGS} -out:"${OUT_DIR}/${GAME_NAME}.exe" `find ${APP_PATH} -mindepth 2 -exec ${APP_PATH}/lib/cygpath -ma {} \; | grep [.]vb$` >> ${LOG_FILE}
+        "${VBNC_BIN}" ${VBNC_FLAGS} ${PLATFORM_FLAGS} ${VB_FLAGS} -out:"${OUT_DIR}/${GAME_NAME}.exe" `find ${APP_PATH} -mindepth 2 -exec ${APP_PATH}/lib/cygpath -ma {} \; | grep [.]vb$` >> ${LOG_FILE}
     else
         ${VBNC_BIN} ${VBNC_FLAGS} ${PLATFORM_FLAGS} ${VB_FLAGS} -out:"${OUT_DIR}/${GAME_NAME}.exe" `find ${APP_PATH} -mindepth 2 | grep [.]vb$` >> ${LOG_FILE}
     fi
