@@ -1,6 +1,4 @@
-﻿using System;
-
-/// <summary>
+﻿/// <summary>
 /// The result of an attack.
 /// </summary>
 public enum ResultOfAttack

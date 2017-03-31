@@ -4,7 +4,7 @@ using SwinGameSDK;
 /// <summary>
 /// The battle phase is handled by the DiscoveryController.
 /// </summary>
-internal static class DiscoveryController
+static class DiscoveryController
 {
 
 	/// <summary>

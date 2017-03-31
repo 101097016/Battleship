@@ -9,7 +9,7 @@ using SwinGameSDK;
 /// <remarks>
 /// Data is saved to a file.
 /// </remarks>
-internal static class HighScoreController
+static class HighScoreController
 {
 	private const int NAME_WIDTH = 3;
 	private const int SCORES_LEFT = 490;
@@ -32,9 +32,7 @@ internal static class HighScoreController
 		{
 			if (obj is Score)
 			{
-				Score other = (Score)obj;
-
-				return other.Value - Value;
+				return ((Score)obj).Value - Value;
 			}
 			else {
 				return 0;
@@ -58,7 +56,7 @@ internal static class HighScoreController
 	{
 		string filename = SwinGame.PathToResource("highscores.txt");
 
-		StreamReader input = new StreamReader(filename);
+		var input = new StreamReader(filename);
 
 		//Read in the # of scores
 		int numScores = Convert.ToInt32(input.ReadLine());
@@ -70,10 +68,11 @@ internal static class HighScoreController
 		for (i = 1; i <= numScores; i++)
 		{
 			string line = input.ReadLine();
-			Score s = new Score();
-			s.Name = line.Substring(0, NAME_WIDTH);
-			s.Value = Convert.ToInt32(line.Substring(NAME_WIDTH));
-			_Scores.Add(s);
+			_Scores.Add(new Score
+			{
+				Name = line.Substring(0, NAME_WIDTH),
+				Value = Convert.ToInt32(line.Substring(NAME_WIDTH))
+			});
 		}
 		input.Close();
 	}
@@ -92,7 +91,7 @@ internal static class HighScoreController
 	{
 		string filename = SwinGame.PathToResource("highscores.txt");
 
-		StreamWriter output = new StreamWriter(filename);
+		var output = new StreamWriter(filename);
 
 		output.WriteLine(_Scores.Count);
 
@@ -169,7 +168,7 @@ internal static class HighScoreController
 		//is it a high score
 		if (value > _Scores[_Scores.Count - 1].Value)
 		{
-			Score s = new Score();
+			var s = new Score();
 			s.Value = value;
 
 			GameController.AddNewState(GameState.ViewingHighScores);

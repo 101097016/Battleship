@@ -211,8 +211,7 @@ public class AIHardPlayer : AIPlayer
 		foundOriginal = false;
 
 		//i = 1, as we dont have targets from the current hit...
-		int i = 0;
-		for (i = 1; i < ship.Hits; i++)
+		for (int i = 1; i < ship.Hits; i++)
 		{
 
 			if (!foundOriginal)

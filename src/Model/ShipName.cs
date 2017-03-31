@@ -1,6 +1,4 @@
-﻿using System;
-
-/// <summary>
+﻿/// <summary>
 /// The names of all of the ships in the gam
 /// </summary>
 /// <remarks></remarks>

@@ -68,7 +68,17 @@ public abstract class AIPlayer : Player
 		/// <returns>true if location 1 and location 2 are at the same spot</returns>
 		public static bool operator ==(Location @this, Location other)
 		{
-			return @this.Row == other.Row && @this.Column == other.Column;
+			return @this != (object)null && other != (object)null && @this.Row == other.Row && @this.Column == other.Column;
+		}
+
+		/// <summary>
+		/// Check if a location is equal to another
+		/// </summary>
+		/// <param name="obj">other location</param>
+		/// <returns>true if this and other location are at the same spot</returns>
+		public override bool Equals(object obj)
+		{
+			return this == (Location)obj;
 		}
 
 		/// <summary>
@@ -84,7 +94,7 @@ public abstract class AIPlayer : Player
 	}
 
 
-	public AIPlayer(BattleShipsGame game) : base(game)
+	protected AIPlayer(BattleShipsGame game) : base(game)
 	{
 	}
 

@@ -1,5 +1,4 @@
-﻿using System;
-using SwinGameSDK;
+﻿using SwinGameSDK;
 using System.Collections.Generic;
 
 public static class GameResources

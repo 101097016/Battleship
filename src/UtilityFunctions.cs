@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using SwinGameSDK;
-using System.Collections;
 
 /// <summary>
 /// This includes a number of utility methods for
@@ -133,7 +132,6 @@ internal static class UtilityFunctions
 						draw = false;
 						break;
 					case TileView.Miss:
-
 						if (small)
 						{
 							fillColor = SMALL_MISS;
@@ -142,7 +140,6 @@ internal static class UtilityFunctions
 						{
 							fillColor = LARGE_MISS;
 						}
-
 						break;
 					case TileView.Hit:
 						if (small)
@@ -155,7 +152,6 @@ internal static class UtilityFunctions
 						}
 						break;
 					case TileView.Sea:
-						//case TileView.Ship: // TODO figure out what was going on here
 						if (small)
 						{
 							fillColor = SMALL_SEA;
@@ -310,7 +306,7 @@ internal static class UtilityFunctions
 
 	public static void UpdateAnimations()
 	{
-		List<Sprite> ended = new List<Sprite>();
+		var ended = new List<Sprite>();
 		foreach (Sprite s in _Animations)
 		{
 			SwinGame.UpdateSprite(s);

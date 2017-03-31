@@ -166,11 +166,11 @@ public static class GameController
 
 		if (isHuman)
 		{
-			UtilityFunctions.Message = "You " + result.ToString();
+			UtilityFunctions.Message = "You " + result;
 		}
 		else
 		{
-			UtilityFunctions.Message = "The AI " + result.ToString();
+			UtilityFunctions.Message = "The AI " + result;
 		}
 
 		switch (result.Value)

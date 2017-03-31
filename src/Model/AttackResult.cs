@@ -1,6 +1,4 @@
-﻿using System;
-
-/// <summary>
+﻿/// <summary>
 /// AttackResult gives the result after a shot has been made.
 /// </summary>
 public class AttackResult

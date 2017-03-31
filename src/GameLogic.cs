@@ -1,6 +1,6 @@
 ﻿using SwinGameSDK;
 
-internal static class GameLogic
+static class GameLogic
 {
 	public static void Main()
 	{

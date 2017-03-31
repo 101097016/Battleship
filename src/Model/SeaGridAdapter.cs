@@ -15,7 +15,7 @@ public class SeaGridAdapter : ISeaGrid
 	public SeaGridAdapter(SeaGrid grid)
 	{
 		_MyGrid = grid;
-		_MyGrid.Changed += new EventHandler(MyGrid_Changed);
+		_MyGrid.Changed += MyGrid_Changed;
 	}
 
 	/// <summary>
@@ -26,7 +26,9 @@ public class SeaGridAdapter : ISeaGrid
 	private void MyGrid_Changed(object sender, EventArgs e)
 	{
 		if (Changed != null)
+		{
 			Changed(this, e);
+		}
 	}
 
 	#region ISeaGrid Members

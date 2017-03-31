@@ -1,12 +1,11 @@
-﻿using System;
-using SwinGameSDK;
+﻿using SwinGameSDK;
 
 /// <summary>
 /// The EndingGameController is responsible for managing the interactions at the end
 /// of a game.
 /// </summary>
 
-internal static class EndingGameController
+static class EndingGameController
 {
 
 	/// <summary>

@@ -1,5 +1,4 @@
-﻿using System;
-using SwinGameSDK;
+﻿using SwinGameSDK;
 
 /// <summary>
 /// The menu controller handles the drawing and user interactions
@@ -7,7 +6,7 @@ using SwinGameSDK;
 /// menu and the settings m,enu.
 /// </summary>
 
-internal static class MenuController
+static class MenuController
 {
 
 	/// <summary>
