@@ -67,14 +67,10 @@ internal static class HighScoreController
 
 		int i = 0;
 
-		//INSTANT C# NOTE: There is no C# equivalent to VB's implicit 'once only' variable initialization within loops, so the following variable declaration has been placed prior to the loop:
-		Score s = new Score();
 		for (i = 1; i <= numScores; i++)
 		{
-			//			Dim s As Score
 			string line = input.ReadLine();
-
-
+			Score s = new Score();
 			s.Name = line.Substring(0, NAME_WIDTH);
 			s.Value = Convert.ToInt32(line.Substring(NAME_WIDTH));
 			_Scores.Add(s);

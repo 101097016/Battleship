@@ -83,23 +83,17 @@ public static class GameController
 		//Create the game
 		_theGame = new BattleShipsGame();
 
-		//create the players
-		//INSTANT C# NOTE: The following VB 'Select Case' included either a non-ordinal switch expression or non-ordinal, range-type, or non-constant 'Case' expressions and was converted to C# 'if-else' logic:
-		//		Select Case _aiSetting
-		//ORIGINAL LINE: Case AIOption.Medium
-		if (_aiSetting == AIOption.Medium)
+		switch (_aiSetting)
 		{
-			_ai = new AIMediumPlayer(_theGame);
-		}
-		//ORIGINAL LINE: Case AIOption.Hard
-		else if (_aiSetting == AIOption.Hard)
-		{
-			_ai = new AIHardPlayer(_theGame);
-		}
-		//ORIGINAL LINE: Case Else
-		else
-		{
-			_ai = new AIHardPlayer(_theGame);
+			case AIOption.Medium:
+				_ai = new AIMediumPlayer(_theGame);
+				break;
+			case AIOption.Hard:
+				_ai = new AIHardPlayer(_theGame);
+				break;
+			default:
+				_ai = new AIHardPlayer(_theGame);
+				break;
 		}
 
 		_human = new Player(_theGame);
@@ -179,51 +173,40 @@ public static class GameController
 			UtilityFunctions.Message = "The AI " + result.ToString();
 		}
 
-		//INSTANT C# NOTE: The following VB 'Select Case' included either a non-ordinal switch expression or non-ordinal, range-type, or non-constant 'Case' expressions and was converted to C# 'if-else' logic:
-		//		Select Case result.Value
-		//ORIGINAL LINE: Case ResultOfAttack.Destroyed
-		if (result.Value == ResultOfAttack.Destroyed)
+		switch (result.Value)
 		{
-			PlayHitSequence(result.Row, result.Column, isHuman);
-			Audio.PlaySoundEffect(GameResources.GameSound("Sink"));
+			case ResultOfAttack.Destroyed:
+				PlayHitSequence(result.Row, result.Column, isHuman);
+				Audio.PlaySoundEffect(GameResources.GameSound("Sink"));
+				break;
+			case ResultOfAttack.GameOver:
+				PlayHitSequence(result.Row, result.Column, isHuman);
+				Audio.PlaySoundEffect(GameResources.GameSound("Sink"));
 
-		}
-		//ORIGINAL LINE: Case ResultOfAttack.GameOver
-		else if (result.Value == ResultOfAttack.GameOver)
-		{
-			PlayHitSequence(result.Row, result.Column, isHuman);
-			Audio.PlaySoundEffect(GameResources.GameSound("Sink"));
+				while (Audio.SoundEffectPlaying(GameResources.GameSound("Sink")))
+				{
+					SwinGame.Delay(10);
+					SwinGame.RefreshScreen();
+				}
 
-			while (Audio.SoundEffectPlaying(GameResources.GameSound("Sink")))
-			{
-				SwinGame.Delay(10);
-				SwinGame.RefreshScreen();
-			}
-
-			if (HumanPlayer.IsDestroyed)
-			{
-				Audio.PlaySoundEffect(GameResources.GameSound("Lose"));
-			}
-			else
-			{
-				Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
-			}
-
-		}
-		//ORIGINAL LINE: Case ResultOfAttack.Hit
-		else if (result.Value == ResultOfAttack.Hit)
-		{
-			PlayHitSequence(result.Row, result.Column, isHuman);
-		}
-		//ORIGINAL LINE: Case ResultOfAttack.Miss
-		else if (result.Value == ResultOfAttack.Miss)
-		{
-			PlayMissSequence(result.Row, result.Column, isHuman);
-		}
-		//ORIGINAL LINE: Case ResultOfAttack.ShotAlready
-		else if (result.Value == ResultOfAttack.ShotAlready)
-		{
-			Audio.PlaySoundEffect(GameResources.GameSound("Error"));
+				if (HumanPlayer.IsDestroyed)
+				{
+					Audio.PlaySoundEffect(GameResources.GameSound("Lose"));
+				}
+				else
+				{
+					Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
+				}
+				break;
+			case ResultOfAttack.Hit:
+				PlayHitSequence(result.Row, result.Column, isHuman);
+				break;
+			case ResultOfAttack.Miss:
+				PlayMissSequence(result.Row, result.Column, isHuman);
+				break;
+			case ResultOfAttack.ShotAlready:
+				Audio.PlaySoundEffect(GameResources.GameSound("Error"));
+				break;
 		}
 	}
 
@@ -280,9 +263,6 @@ public static class GameController
 	/// to the AI player.</remarks>
 	private static void CheckAttackResult(AttackResult result)
 	{
-		//INSTANT C# NOTE: The following VB 'Select Case' included either a non-ordinal switch expression or non-ordinal, range-type, or non-constant 'Case' expressions and was converted to C# 'if-else' logic:
-		//		Select Case result.Value
-		//ORIGINAL LINE: Case ResultOfAttack.Miss
 		if (result.Value == ResultOfAttack.Miss)
 		{
 			if (_theGame.Player == ComputerPlayer)
@@ -290,7 +270,6 @@ public static class GameController
 				AIAttack();
 			}
 		}
-		//ORIGINAL LINE: Case ResultOfAttack.GameOver
 		else if (result.Value == ResultOfAttack.GameOver)
 		{
 			SwitchState(GameState.EndingGame);

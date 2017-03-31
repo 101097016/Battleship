@@ -29,8 +29,8 @@ public static class GameResources
 
 		//Ships
 		int i = 0;
-for (i = 1; i <= 5; i++)
-{
+		for (i = 1; i <= 5; i++)
+		{
 			NewImage("ShipLR" + i, "ship_deploy_horiz_" + i + ".png");
 			NewImage("ShipUD" + i, "ship_deploy_vert_" + i + ".png");
 		}
@@ -263,8 +263,6 @@ for (i = 1; i <= 5; i++)
 
 	private static void FreeFonts()
 	{
-//INSTANT C# NOTE: Commented this declaration since looping variables in 'foreach' loops are declared in the 'foreach' header in C#:
-//		Font obj = null;
 		foreach (Font obj in _Fonts.Values)
 		{
 			SwinGame.FreeFont(obj);
@@ -273,8 +271,6 @@ for (i = 1; i <= 5; i++)
 
 	private static void FreeImages()
 	{
-//INSTANT C# NOTE: Commented this declaration since looping variables in 'foreach' loops are declared in the 'foreach' header in C#:
-//		Bitmap obj = null;
 		foreach (Bitmap obj in _Images.Values)
 		{
 			SwinGame.FreeBitmap(obj);
@@ -283,8 +279,6 @@ for (i = 1; i <= 5; i++)
 
 	private static void FreeSounds()
 	{
-//INSTANT C# NOTE: Commented this declaration since looping variables in 'foreach' loops are declared in the 'foreach' header in C#:
-//		SoundEffect obj = null;
 		foreach (SoundEffect obj in _Sounds.Values)
 		{
 			Audio.FreeSoundEffect(obj);
@@ -293,8 +287,6 @@ for (i = 1; i <= 5; i++)
 
 	private static void FreeMusic()
 	{
-//INSTANT C# NOTE: Commented this declaration since looping variables in 'foreach' loops are declared in the 'foreach' header in C#:
-//		Music obj = null;
 		foreach (Music obj in _Music.Values)
 		{
 			Audio.FreeMusic(obj);

@@ -101,10 +101,7 @@ internal static class MenuController
 
 		if (SwinGame.MouseClicked(MouseButton.LeftButton))
 		{
-			int i = 0;
-			//INSTANT C# NOTE: The ending condition of VB 'For' loops is tested only on entry to the loop. Instant C# has created a temporary variable in order to use the initial value of _menuStructure(menu).Length for every iteration:
-			int tempVar = _menuStructure[menu].Length;
-			for (i = 0; i < tempVar; i++)
+			for (int i = 0; i < _menuStructure[menu].Length; i++)
 			{
 				//IsMouseOver the i'th button of the menu
 				if (IsMouseOverMenu(i, level, xOffset))
@@ -185,10 +182,7 @@ internal static class MenuController
 	{
 		int btnTop = MENU_TOP - (MENU_GAP + BUTTON_HEIGHT) * level;
 
-		int i = 0;
-		//INSTANT C# NOTE: The ending condition of VB 'For' loops is tested only on entry to the loop. Instant C# has created a temporary variable in order to use the initial value of _menuStructure(menu).Length for every iteration:
-		int tempVar = _menuStructure[menu].Length;
-		for (i = 0; i < tempVar; i++)
+		for (int i = 0; i < _menuStructure[menu].Length; i++)
 		{
 			int btnLeft = MENU_LEFT + BUTTON_SEP * (i + xOffset);
 			//SwinGame.FillRectangle(Color.White, btnLeft, btnTop, BUTTON_WIDTH, BUTTON_HEIGHT)

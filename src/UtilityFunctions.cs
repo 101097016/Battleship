@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SwinGameSDK;
+using System.Collections;
 
 /// <summary>
 /// This includes a number of utility methods for
@@ -126,50 +127,44 @@ internal static class UtilityFunctions
 				Color fillColor = null;
 				bool draw = true;
 
-
-				//INSTANT C# NOTE: The following VB 'Select Case' included either a non-ordinal switch expression or non-ordinal, range-type, or non-constant 'Case' expressions and was converted to C# 'if-else' logic:
-				//				Select Case grid.Item(row, col)
-				//ORIGINAL LINE: Case TileView.Ship
-				if (grid.Item(row, col) == TileView.Ship)
+				switch (grid.Item(row, col))
 				{
-					draw = false;
-					//If small Then fillColor = _SMALL_SHIP Else fillColor = _LARGE_SHIP
-				}
-				//ORIGINAL LINE: Case TileView.Miss
-				else if (grid.Item(row, col) == TileView.Miss)
-				{
-					if (small)
-					{
-						fillColor = SMALL_MISS;
-					}
-					else
-					{
-						fillColor = LARGE_MISS;
-					}
-				}
-				//ORIGINAL LINE: Case TileView.Hit
-				else if (grid.Item(row, col) == TileView.Hit)
-				{
-					if (small)
-					{
-						fillColor = SMALL_HIT;
-					}
-					else
-					{
-						fillColor = LARGE_HIT;
-					}
-				}
-				//ORIGINAL LINE: Case TileView.Sea, TileView.Ship
-				else if ((grid.Item(row, col) == TileView.Sea) || (grid.Item(row, col) == TileView.Ship))
-				{
-					if (small)
-					{
-						fillColor = SMALL_SEA;
-					}
-					else
-					{
+					case TileView.Ship:
 						draw = false;
-					}
+						break;
+					case TileView.Miss:
+
+						if (small)
+						{
+							fillColor = SMALL_MISS;
+						}
+						else
+						{
+							fillColor = LARGE_MISS;
+						}
+
+						break;
+					case TileView.Hit:
+						if (small)
+						{
+							fillColor = SMALL_HIT;
+						}
+						else
+						{
+							fillColor = LARGE_HIT;
+						}
+						break;
+					case TileView.Sea:
+						//case TileView.Ship: // TODO figure out what was going on here
+						if (small)
+						{
+							fillColor = SMALL_SEA;
+						}
+						else
+						{
+							draw = false;
+						}
+						break;
 				}
 
 				if (draw)
@@ -343,9 +338,7 @@ internal static class UtilityFunctions
 	public static void DrawAnimationSequence()
 	{
 		int i = 0;
-		//INSTANT C# NOTE: The ending condition of VB 'For' loops is tested only on entry to the loop. Instant C# has created a temporary variable in order to use the initial value of ANIMATION_CELLS * FRAMES_PER_CELL for every iteration:
-		int tempVar = ANIMATION_CELLS * FRAMES_PER_CELL;
-		for (i = 1; i <= tempVar; i++)
+		for (i = 1; i <= ANIMATION_CELLS * FRAMES_PER_CELL; i++)
 		{
 			UpdateAnimations();
 			GameController.DrawScreen();

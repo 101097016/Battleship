@@ -66,8 +66,6 @@ public class SeaGrid : ISeaGrid
 	/// <param name="x">x coordinate of the tile</param>
 	/// <param name="y">y coordiante of the tile</param>
 	/// <returns></returns>
-	//INSTANT C# NOTE: C# does not support parameterized properties - the following property has been rewritten as a function:
-	//ORIGINAL LINE: Public ReadOnly Property Item(ByVal x As Integer, ByVal y As Integer) As TileView Implements ISeaGrid.Item
 	public TileView Item(int x, int y)
 	{
 		return _GameTiles[x, y].View;
