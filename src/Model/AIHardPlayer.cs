@@ -12,7 +12,8 @@ public class AIHardPlayer : AIPlayer
 {
 	/// <summary>
 	/// Target allows the AI to know more things, for example the source of a
-	/// shot target
+	/// shot target. It's using the protected class Location from AIPlayer.cs to store
+	/// the rows and columns of the place where shot at.
 	/// </summary>
 	protected class Target
 	{
@@ -45,6 +46,7 @@ public class AIHardPlayer : AIPlayer
 			}
 		}
 
+		// Takes in the location of the aim and stores them in the _ShotAt and _Source variables.
 		internal Target(Location shootat, Location source)
 		{
 			_ShotAt = shootat;
@@ -77,9 +79,8 @@ public class AIHardPlayer : AIPlayer
 	}
 
 	/// <summary>
-	/// Private enumarator for AI states. currently there are two states,
-	/// the AI can be searching for a ship, or if it has found a ship it will
-	/// target the same ship
+	/// Private enumerator for AI states. currently there are three states,
+	/// the AI can be searching for a ship, it can target a ship and it can hit a locked on ship.
 	/// </summary>
 	private enum AIStates
 	{
@@ -99,11 +100,14 @@ public class AIHardPlayer : AIPlayer
 		HittingShip
 	}
 
+	// Assigning enumerator AIStates .Searching to a variable and collecting stacks and lists of Targets.
 	private AIStates _CurrentState = AIStates.Searching;
 	private Stack<Target> _Targets = new Stack<Target>();
 	private List<Target> _LastHit = new List<Target>();
 	private Target _CurrentTarget;
 
+	// Using class BattleShipGame for base code of shooting and swapping between players,
+	// it also checks if ships are destroyed.
 	public AIHardPlayer(BattleShipsGame game) : base(game)
 	{
 	}
@@ -120,7 +124,7 @@ public class AIHardPlayer : AIPlayer
 		{
 			_CurrentTarget = null;
 
-			//check which state the AI is in and uppon that choose which coordinate generation
+			//check which state the AI is in and upon that choose which coordinate generation
 			//method will be used.
 			switch (_CurrentState)
 			{
@@ -134,8 +138,8 @@ public class AIHardPlayer : AIPlayer
 				default:
 					throw new ApplicationException("AI has gone in an invalid state");
 			}
-
-		} while (row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid.Item(row, column) != TileView.Sea); //while inside the grid and not a sea tile do the search
+		// while inside the grid and not a sea tile do the search
+		} while (row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid.Item(row, column) != TileView.Sea); 
 	}
 
 	/// <summary>
@@ -189,6 +193,7 @@ public class AIHardPlayer : AIPlayer
 				throw new ApplicationException("Error in AI");
 		}
 
+		// If there are no current targets the AI searches for targets.
 		if (_Targets.Count == 0)
 		{
 			_CurrentState = AIStates.Searching;
@@ -196,7 +201,7 @@ public class AIHardPlayer : AIPlayer
 	}
 
 	/// <summary>
-	/// ProcessDetroy is able to process the destroyed ships targets and remove _LastHit targets.
+	/// ProcessDestroy is able to process the destroyed ships targets and remove _LastHit targets.
 	/// It will also call RemoveShotsAround to remove targets that it was going to shoot at
 	/// </summary>
 	/// <param name="row">the row that was shot at and destroyed</param>
@@ -217,7 +222,7 @@ public class AIHardPlayer : AIPlayer
 			if (!foundOriginal)
 			{
 				source = current.Source;
-				//Source is nnothing if the ship was originally hit in
+				//Source is nothing if the ship was originally hit in
 				// the middle. This then searched forward, rather than
 				// backward through the list of targets
 				if (source == null)
@@ -335,12 +340,12 @@ public class AIHardPlayer : AIPlayer
 	}
 
 	/// <summary>
-	/// MoveToTopOfStack will re-order the stack by checkin the coordinates of each target
+	/// MoveToTopOfStack will re-order the stack by checking the coordinates of each target
 	/// If they have the right column or row values it will be moved to the _Match stack else 
 	/// put it on the _NoMatch stack. Then move all the targets from the _NoMatch stack back on the 
 	/// _Targets stack, these will be at the bottom making them less important. The move all the
 	/// targets from the _Match stack on the _Targets stack, these will be on the top and will there
-	/// for be shot at first
+	/// fore be shot at first
 	/// </summary>
 	/// <param name="row">the row of the optimisation</param>
 	/// <param name="column">the column of the optimisation</param>
@@ -375,7 +380,7 @@ public class AIHardPlayer : AIPlayer
 	}
 
 	/// <summary>
-	/// AddTarget will add the targets it will shoot onto a stack
+	/// AddTarget will add the targets it will shoot onto a stack.
 	/// </summary>
 	/// <param name="row">the row of the targets location</param>
 	/// <param name="column">the column of the targets location</param>
