@@ -22,12 +22,11 @@
       <CustomCommands>
         <Command>
           <type>AfterBuild</type>
-          <command>cp -p -f ${ProjectDir}\lib\win\*.dll ${TargetDir}</command>
-          <externalConsole>True</externalConsole>
+          <command>xcopy /q /b /y ${ProjectDir}\lib\win\*.dll ${TargetDir}</command>
         </Command>
         <Command>
           <type>AfterBuild</type>
-          <command>cp -p -f -R ${ProjectDir}\Resources ${TargetDir}\Resources</command>
+          <command>xcopy /q /b /y /s ${ProjectDir}\Resources ${TargetDir}\Resources\</command>
         </Command>
       </CustomCommands>
     </CustomCommands>
