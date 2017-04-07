@@ -18,6 +18,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp -p -f ${ProjectDir}\lib\win\*.dll ${TargetDir}</command>
+          <externalConsole>True</externalConsole>
+        </Command>
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp -p -f -R ${ProjectDir}\Resources ${TargetDir}\Resources</command>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <Optimize>true</Optimize>
@@ -59,7 +72,6 @@
       <HintPath>lib\SwinGame.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
