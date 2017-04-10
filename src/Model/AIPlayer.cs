@@ -3,7 +3,7 @@
 /// <summary>
 /// The AIPlayer is a type of player. It can readomly deploy ships, it also has the
 /// functionality to generate coordinates and shoot at tiles
-/// </summary>
+/// </summary> 
 public abstract class AIPlayer : Player
 {
 	/// <summary>
@@ -16,10 +16,9 @@ public abstract class AIPlayer : Player
 		private int _Column;
 
 		/// <summary>
-		/// The row of the shot
+		/// Gets or sets the row.
 		/// </summary>
-		/// <value>The row of the shot</value>
-		/// <returns>The row of the shot</returns>
+		/// <value>The row.</value>
 		public int Row
 		{
 			get
@@ -33,10 +32,9 @@ public abstract class AIPlayer : Player
 		}
 
 		/// <summary>
-		/// The column of the shot
+		/// Gets or sets the column.
 		/// </summary>
-		/// <value>The column of the shot</value>
-		/// <returns>The column of the shot</returns>
+		/// <value>The column.</value>
 		public int Column
 		{
 			get
@@ -50,10 +48,11 @@ public abstract class AIPlayer : Player
 		}
 
 		/// <summary>
-		/// Sets the last hit made to the local variables
+		/// Initializes a new instance of the <see cref="T:AIPlayer.Location"/> class.
+		/// Sets the last hit made to the local variables.
 		/// </summary>
-		/// <param name="row">the row of the location</param>
-		/// <param name="column">the column of the location</param>
+		/// <param name="row">the row of the location.</param>
+		/// <param name="column">the column of the location.</param>
 		public Location(int row, int column)
 		{
 			_Column = column;
@@ -61,44 +60,49 @@ public abstract class AIPlayer : Player
 		}
 
 		/// <summary>
-		/// Check if two locations are equal
+		/// Determines whether a specified instance of <see cref="AIPlayer.Location"/> is equal to another specified <see cref="AIPlayer.Location"/>.
 		/// </summary>
-		/// <param name="this">location 1</param>
-		/// <param name="other">location 2</param>
-		/// <returns>true if location 1 and location 2 are at the same spot</returns>
+		/// <param name="this">The first <see cref="AIPlayer.Location"/> to compare.</param>
+		/// <param name="other">The second <see cref="AIPlayer.Location"/> to compare.</param>
+		/// <returns><c>true</c> if <c>this</c> and <c>other</c> are equal; otherwise, <c>false</c>.</returns>
 		public static bool operator ==(Location @this, Location other)
 		{
 			return @this != (object)null && other != (object)null && @this.Row == other.Row && @this.Column == other.Column;
 		}
 
 		/// <summary>
-		/// Check if a location is equal to another
+		/// Determines whether the specified <see cref="object"/> is equal to the current <see cref="T:AIPlayer.Location"/>.
 		/// </summary>
-		/// <param name="obj">other location</param>
-		/// <returns>true if this and other location are at the same spot</returns>
+		/// <param name="obj">The <see cref="object"/> to compare with the current <see cref="T:AIPlayer.Location"/>.</param>
+		/// <returns><c>true</c> if the specified <see cref="object"/> is equal to the current <see cref="T:AIPlayer.Location"/>;
+		/// otherwise, <c>false</c>.</returns>
 		public override bool Equals(object obj)
 		{
 			return this == (Location)obj;
 		}
 
 		/// <summary>
-		/// Check if two locations are not equal
+		/// Determines whether a specified instance of <see cref="AIPlayer.Location"/> is not equal to another specified <see cref="AIPlayer.Location"/>.
 		/// </summary>
-		/// <param name="this">location 1</param>
-		/// <param name="other">location 2</param>
-		/// <returns>true if location 1 and location 2 are not at the same spot</returns>
+		/// <param name="this">The first <see cref="AIPlayer.Location"/> to compare.</param>
+		/// <param name="other">The second <see cref="AIPlayer.Location"/> to compare.</param>
+		/// <returns><c>true</c> if <c>this</c> and <c>other</c> are not equal; otherwise, <c>false</c>.</returns>
 		public static bool operator !=(Location @this, Location other)
 		{
 			return !(@this == other);
 		}
 	}
 
-
+	/// <summary>
+	/// Initializes a new instance of the <see cref="T:AIPlayer"/> class.
+	/// </summary>
+	/// <param name="game">Game.</param>
 	protected AIPlayer(BattleShipsGame game) : base(game)
 	{
 	}
 
 	/// <summary>
+	/// Generates the coords.
 	/// Generate a valid row, column to shoot at
 	/// </summary>
 	/// <param name="row">output the row for the next shot</param>
@@ -106,30 +110,37 @@ public abstract class AIPlayer : Player
 	protected abstract void GenerateCoords(ref int row, ref int column);
 
 	/// <summary>
+	/// Processes the shot.
 	/// The last shot had the following result. Child classes can use this
 	/// to prepare for the next shot.
+	/// // result = 
 	/// </summary>
-	/// <param name="result">The result of the shot</param>
 	/// <param name="row">the row shot</param>
 	/// <param name="col">the column shot</param>
+	/// <param name="result">The result of the shot</param>
 	protected abstract void ProcessShot(int row, int col, AttackResult result);
 
 	/// <summary>
+	/// Attack this instance.
 	/// The AI takes its attacks until its go is over.
 	/// </summary>
-	/// <returns>The result of the last attack</returns>
+	/// <returns>The attack.</returns>
 	public override AttackResult Attack()
 	{
 		AttackResult result = null;
 		int row = 0;
 		int column = 0;
 
-		do //keep hitting until a miss
+		// keep hitting until there's a miss
+		do 
 		{
 			Delay();
 
-			GenerateCoords(ref row, ref column); //generate coordinates for shot
-			result = _game.Shoot(row, column); //take shot
+			// generate coordinates for shot
+			GenerateCoords(ref row, ref column);
+
+			// take shot
+			result = _game.Shoot(row, column); 
 			ProcessShot(row, column, result);
 		} while (result.Value != ResultOfAttack.Miss && result.Value != ResultOfAttack.GameOver && !SwinGame.WindowCloseRequested());
 
@@ -144,7 +155,7 @@ public abstract class AIPlayer : Player
 		int i = 0;
 		for (i = 0; i <= 150; i++)
 		{
-			//Dont delay if window is closed
+			// Don't delay if window is closed
 			if (SwinGame.WindowCloseRequested())
 			{
 				return;

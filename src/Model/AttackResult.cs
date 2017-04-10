@@ -1,4 +1,6 @@
-﻿// AttackResult gives the result after a shot has been made.
+﻿/// <summary>
+/// AttackResult gives the result after a shot has been made.
+/// </summary>
 public class AttackResult
 {
 	private ResultOfAttack _Value;
@@ -7,7 +9,9 @@ public class AttackResult
 	private int _Row;
 	private int _Column;
 
-	// The result of the attack
+	/// <summary>
+	/// The result of the attack
+	/// </summary>
 	public ResultOfAttack Value
 	{
 		get
@@ -16,7 +20,10 @@ public class AttackResult
 		}
 	}
 
-	// The ship, if any, involved in this result
+	/// <summary>
+	/// The ship, if any, involved in this result
+	/// </summary>
+	/// <value>The ship.</value> 
 	public Ship Ship
 	{
 		get
@@ -25,7 +32,10 @@ public class AttackResult
 		}
 	}
 
-	// A textual description of the result.
+	/// <summary>
+	/// A textual description of the result.
+	/// </summary>
+	/// <value>The text.</value>
 	public string Text
 	{
 		get
@@ -34,7 +44,10 @@ public class AttackResult
 		}
 	}
 
-	// The row where the attack occurred
+	/// <summary>
+	/// The row where the attack occurred
+	/// </summary>
+	/// <value>The row.</value>
 	public int Row
 	{
 		get
@@ -43,7 +56,10 @@ public class AttackResult
 		}
 	}
 
-	// The column where the attack occurred
+	/// <summary>
+	/// The column where the attack occurred
+	/// </summary>
+	/// <value>The column.</value>
 	public int Column
 	{
 		get
@@ -52,8 +68,14 @@ public class AttackResult
 		}
 	}
 
-	// Set the _Value to the PossibleAttack value
-	// value = either hit, miss, destroyed, shotalready
+	/// <summary>
+	/// Initializes a new instance of the <see cref="T:AttackResult"/> class.
+	/// Set the _Value to the PossibleAttack value
+	/// </summary>
+	/// <param name="value">either hit, miss, destroyed, shotalready</param>
+	/// <param name="text">Text.</param>
+	/// <param name="row">Row.</param>
+	/// <param name="column">Column.</param>
 	public AttackResult(ResultOfAttack value, string text, int row, int column)
 	{
 		_Value = value;
@@ -63,15 +85,25 @@ public class AttackResult
 		_Column = column;
 	}
 
-	// Set the _Value to the PossibleAttack value, and the _Ship to the ship
-	// value = either hit, miss, destroyed, shotalready
-	// ship = the ship information
+	/// <summary>
+	/// Initializes a new instance of the <see cref="T:AttackResult"/> class.
+	/// Set the _Value to the PossibleAttack value, and the _Ship to the ship
+	/// </summary>
+	/// <param name="value">either hit, miss, destroyed, shotalready</param>
+	/// <param name="ship">the ship information</param>
+	/// <param name="text">Text.</param>
+	/// <param name="row">Row.</param>
+	/// <param name="column">Column.</param>
 	public AttackResult(ResultOfAttack value, Ship ship, string text, int row, int column) : this(value, text, row, column)
 	{
 		_Ship = ship;
 	}
 
-	// Displays the textual information about the attack
+	/// <summary>
+	/// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:AttackResult"/>.
+	/// Displays the textual information about the attack
+	/// </summary>
+	/// <returns>A <see cref="T:System.String"/> that represents the current <see cref="T:AttackResult"/>.</returns>
 	public override string ToString()
 	{
 		if (_Ship == null)

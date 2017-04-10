@@ -1,7 +1,7 @@
 ﻿using System;
 
 /// <summary>
-/// The different AI levels.
+/// The different AI diffciulty levels.
 /// </summary>
 public enum AIOption
 {
