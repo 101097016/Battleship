@@ -8,21 +8,7 @@
     <Files>
       <File FileName="src\Model\AIPlayer.cs" Line="70" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="Battleship" expanded="True">
-            <Node name="Battleship" expanded="True">
-              <Node name="src" expanded="True">
-                <Node name="Model" expanded="True">
-                  <Node name="AIPlayer.cs" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.Battleship PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>
