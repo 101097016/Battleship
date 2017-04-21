@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using SwinGameSDK;
@@ -34,7 +34,8 @@ static class HighScoreController
 			{
 				return ((Score)obj).Value - Value;
 			}
-			else {
+			else
+			{
 				return 0;
 			}
 		}
@@ -131,7 +132,8 @@ static class HighScoreController
 			{
 				SwinGame.DrawText(" " + (i + 1) + ":   " + s.Name + "   " + s.Value, Color.White, GameResources.GameFont("Courier"), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
 			}
-			else {
+			else
+			{
 				SwinGame.DrawText((i + 1) + ":   " + s.Name + "   " + s.Value, Color.White, GameResources.GameFont("Courier"), SCORES_LEFT, SCORES_TOP + i * SCORE_GAP);
 			}
 		}
@@ -150,11 +152,11 @@ static class HighScoreController
 	}
 
 	/// <summary>
-	/// Read the user's name for their highsSwinGame.
+	/// Read the user's name for their highscore.
 	/// </summary>
-	/// <param name="value">the player's sSwinGame.</param>
+	/// <param name="value">the player's score.</param>
 	/// <remarks>
-	/// This verifies if the score is a highsSwinGame.
+	/// This verifies if the score is a highscore.
 	/// </remarks>
 	public static void ReadHighScore(int value)
 	{
