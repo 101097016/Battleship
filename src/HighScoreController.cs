@@ -180,7 +180,7 @@ static class HighScoreController
 			SwinGame.StartReadingText(Color.White, NAME_WIDTH, GameResources.GameFont("Courier"), x, ENTRY_TOP);
 
 			//Read the text from the user
-			while (SwinGame.ReadingText())
+			while (SwinGame.ReadingText() && !SwinGame.WindowCloseRequested())
 			{
 				SwinGame.ProcessEvents();
 
