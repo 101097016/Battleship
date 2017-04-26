@@ -1,10 +1,10 @@
 ﻿using SwinGameSDK;
 using System.Collections.Generic;
 
-public static class GameResources
+public class GameResources
 {
 
-	private static void LoadFonts()
+	private void LoadFonts()
 	{
 		NewFont("ArialLarge", "arial.ttf", 80);
 		NewFont("Courier", "cour.ttf", 14);
@@ -12,7 +12,7 @@ public static class GameResources
 		NewFont("Menu", "ffaccess.ttf", 8);
 	}
 
-	private static void LoadImages()
+	private void LoadImages()
 	{
 		//Backgrounds
 		NewImage("Menu", "main_page.jpg");
@@ -40,18 +40,17 @@ public static class GameResources
 
 	}
 
-	private static void LoadSounds()
+	private void LoadSounds()
 	{
 		NewSound("Error", "error.wav");
 		NewSound("Hit", "hit.wav");
 		NewSound("Sink", "sink.wav");
-		NewSound("Siren", "siren.wav");
 		NewSound("Miss", "watershot.wav");
 		NewSound("Winner", "winner.wav");
 		NewSound("Lose", "lose.wav");
 	}
 
-	private static void LoadMusic()
+	private void LoadMusic()
 	{
 		NewMusic("Background", "horrordrone.mp3");
 	}
@@ -62,7 +61,7 @@ public static class GameResources
 	/// <param name="font">Name of Font</param>
 	/// <returns>The Font Loaded with this Name</returns>
 
-	public static Font GameFont(string font)
+	public Font GameFont(string font)
 	{
 		return _Fonts[font];
 	}
@@ -73,7 +72,7 @@ public static class GameResources
 	/// <param name="image">Name of image</param>
 	/// <returns>The image loaded with this name</returns>
 
-	public static Bitmap GameImage(string image)
+	public Bitmap GameImage(string image)
 	{
 		return _Images[image];
 	}
@@ -84,7 +83,7 @@ public static class GameResources
 	/// <param name="sound">Name of sound</param>
 	/// <returns>The sound with this name</returns>
 
-	public static SoundEffect GameSound(string sound)
+	public SoundEffect GameSound(string sound)
 	{
 		return _Sounds[sound];
 	}
@@ -95,7 +94,7 @@ public static class GameResources
 	/// <param name="music">Name of music</param>
 	/// <returns>The music with this name</returns>
 
-	public static Music GameMusic(string music)
+	public Music GameMusic(string music)
 	{
 		return _Music[music];
 	}
@@ -117,7 +116,7 @@ public static class GameResources
 	/// Sounds, Music.
 	/// </summary>
 
-	public static void LoadResources()
+	public void LoadResources()
 	{
 		int width = 0;
 		int height = 0;
@@ -230,6 +229,8 @@ public static class GameResources
 		SwinGame.ChangeScreenSize(width, height);
 	}
 
+
+
 	private static void NewFont(string fontName, string filename, int size)
 	{
 		_Fonts.Add(fontName, SwinGame.LoadFont(SwinGame.PathToResource(filename, ResourceKind.FontResource), size));
@@ -238,16 +239,6 @@ public static class GameResources
 	private static void NewImage(string imageName, string filename)
 	{
 		_Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(filename, ResourceKind.BitmapResource)));
-	}
-
-	private static void NewTransparentColorImage(string imageName, string fileName, Color transColor)
-	{
-		_Images.Add(imageName, SwinGame.LoadBitmap(SwinGame.PathToResource(fileName, ResourceKind.BitmapResource), true, transColor));
-	}
-
-	private static void NewTransparentColourImage(string imageName, string fileName, Color transColor)
-	{
-		NewTransparentColorImage(imageName, fileName, transColor);
 	}
 
 	private static void NewSound(string soundName, string filename)

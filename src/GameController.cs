@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using SwinGameSDK;
 
@@ -7,24 +7,51 @@ using SwinGameSDK;
 /// managing user input, and displaying the current state of the
 /// game.
 /// </summary>
-public static class GameController
+public sealed class GameController
 {
+	private BattleShipsGame _theGame;
+	private Player _human;
+	private AIPlayer _ai;
 
-	private static BattleShipsGame _theGame;
-	private static Player _human;
-	private static AIPlayer _ai;
+	private Stack<GameState> _state = new Stack<GameState>();
 
-	private static Stack<GameState> _state = new Stack<GameState>();
+	private AIOption _aiSetting;
 
-	private static AIOption _aiSetting;
+	private GameResources _resources;
+	private MenuController _menuController;
+	private DeploymentController _deploymentController;
+	private DiscoveryController _discoveryController;
+	private EndingGameController _endingGameController;
+
+	internal HighScoreController highScoreController;
+	internal ScreenController screenController;
+
+	/// <summary>
+	/// Returns or sets the current game resources.
+	/// </summary>
+	/// <value>The current game resources</value>
+	/// <returns>The current game resources</returns>
+	public GameResources Resources
+	{
+		get
+		{
+			return _resources;
+		}
+		set
+		{
+			_resources = value;
+			if (SwinGame.MusicPlaying()) SwinGame.StopMusic();
+			SwinGame.PlayMusic(value.GameMusic("Background"));
+		}
+	}
 
 	/// <summary>
 	/// Returns the current state of the game, indicating which screen is
-	/// currently being used
+	/// currently being used.
 	/// </summary>
 	/// <value>The current state</value>
 	/// <returns>The current state</returns>
-	public static GameState CurrentState
+	public GameState CurrentState
 	{
 		get
 		{
@@ -37,7 +64,7 @@ public static class GameController
 	/// </summary>
 	/// <value>the human player</value>
 	/// <returns>the human player</returns>
-	public static Player HumanPlayer
+	public Player HumanPlayer
 	{
 		get
 		{
@@ -50,7 +77,7 @@ public static class GameController
 	/// </summary>
 	/// <value>the computer player</value>
 	/// <returns>the conputer player</returns>
-	public static Player ComputerPlayer
+	public Player ComputerPlayer
 	{
 		get
 		{
@@ -58,8 +85,35 @@ public static class GameController
 		}
 	}
 
-	static GameController()
+	public GameController(GameResources resources,
+						  ScreenController screenController,
+						  MenuController menuController,
+						  DeploymentController deploymentController,
+						  DiscoveryController discoveryController,
+						  EndingGameController endingGameController,
+						  HighScoreController highScoreController)
 	{
+		//install the controllers and resources
+		Resources = resources;
+
+		this.screenController = screenController;
+		this.screenController._controller = this;
+
+		_menuController = menuController;
+		_menuController._controller = this;
+
+		_deploymentController = deploymentController;
+		_deploymentController._controller = this;
+
+		_discoveryController = discoveryController;
+		_discoveryController._controller = this;
+
+		_endingGameController = endingGameController;
+		_endingGameController._controller = this;
+
+		this.highScoreController = highScoreController;
+		this.highScoreController._controller = this;
+
 		//bottom state will be quitting. If player exits main menu then the game is over
 		_state.Push(GameState.Quitting);
 
@@ -73,7 +127,7 @@ public static class GameController
 	/// <remarks>
 	/// Creates an AI player based upon the _aiSetting.
 	/// </remarks>
-	public static void StartGame()
+	public void StartGame()
 	{
 		if (_theGame != null)
 		{
@@ -109,7 +163,7 @@ public static class GameController
 	/// Stops listening to the old game once a new game is started
 	/// </summary>
 
-	private static void EndGame()
+	private void EndGame()
 	{
 		//RemoveHandler _human.PlayerGrid.Changed, AddressOf GridChanged
 		_ai.PlayerGrid.Changed -= GridChanged;
@@ -122,34 +176,34 @@ public static class GameController
 	/// </summary>
 	/// <param name="sender">the grid that changed</param>
 	/// <param name="args">not used</param>
-	private static void GridChanged(object sender, EventArgs args)
+	private void GridChanged(object sender, EventArgs args)
 	{
 		DrawScreen();
 		SwinGame.RefreshScreen();
 	}
 
-	private static void PlayHitSequence(int row, int column, bool showAnimation)
+	private void PlayHitSequence(int row, int column, bool showAnimation)
 	{
 		if (showAnimation)
 		{
-			UtilityFunctions.AddExplosion(row, column);
+			screenController.AddExplosion(row, column);
 		}
 
-		Audio.PlaySoundEffect(GameResources.GameSound("Hit"));
+		Audio.PlaySoundEffect(Resources.GameSound("Hit"));
 
-		UtilityFunctions.DrawAnimationSequence();
+		screenController.DrawAnimationSequence();
 	}
 
-	private static void PlayMissSequence(int row, int column, bool showAnimation)
+	private void PlayMissSequence(int row, int column, bool showAnimation)
 	{
 		if (showAnimation)
 		{
-			UtilityFunctions.AddSplash(row, column);
+			screenController.AddSplash(row, column);
 		}
 
-		Audio.PlaySoundEffect(GameResources.GameSound("Miss"));
+		Audio.PlaySoundEffect(Resources.GameSound("Miss"));
 
-		UtilityFunctions.DrawAnimationSequence();
+		screenController.DrawAnimationSequence();
 	}
 
 	/// <summary>
@@ -160,32 +214,33 @@ public static class GameController
 	/// <remarks>
 	/// Displays a message, plays sound and redraws the screen
 	/// </remarks>
-	private static void AttackCompleted(object sender, AttackResult result)
+	private void AttackCompleted(object sender, AttackResult result)
 	{
 		bool isHuman = _theGame.Player == HumanPlayer;
 
 		if (isHuman)
 		{
-			UtilityFunctions.Message = "You " + result;
+			screenController.Message = "You " + result;
 		}
 		else
 		{
-			UtilityFunctions.Message = "The AI " + result;
+			screenController.Message = "The AI " + result;
 		}
 
         switch (result.Value)
 		{
 			case ResultOfAttack.Destroyed:
 				PlayHitSequence(result.Row, result.Column, isHuman);
-				Audio.PlaySoundEffect(GameResources.GameSound("Sink"));
-                break;
+				Audio.PlaySoundEffect(Resources.GameSound("Sink"));
+				break;
 			case ResultOfAttack.GameOver:
-                PlayHitSequence(result.Row, result.Column, isHuman);
-				Audio.PlaySoundEffect(GameResources.GameSound("Sink"));
+				PlayHitSequence(result.Row, result.Column, isHuman);
+				Audio.PlaySoundEffect(Resources.GameSound("Sink"));
 
-                //JED, ERROR FOUND HANGING HERE ON GAMEOVER
+                //JED, removed this loop, was causeing hanging during the end game. With the screech of a background music this
+                //sound overlap is inaudible.
                 /*
-                while (Audio.SoundEffectPlaying(GameResources.GameSound("Sink")))
+				while (Audio.SoundEffectPlaying(Resources.GameSound("Sink")))
 				{
 					SwinGame.Delay(10);
 					SwinGame.RefreshScreen();
@@ -194,13 +249,13 @@ public static class GameController
 
                 if (HumanPlayer.IsDestroyed)
 				{
-					Audio.PlaySoundEffect(GameResources.GameSound("Lose"));
+					Audio.PlaySoundEffect(Resources.GameSound("Lose"));
 				}
 				else
 				{
-					Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
-                }
-                break;
+					Audio.PlaySoundEffect(Resources.GameSound("Winner"));
+				}
+				break;
 			case ResultOfAttack.Hit:
 				PlayHitSequence(result.Row, result.Column, isHuman);
 				break;
@@ -208,7 +263,7 @@ public static class GameController
 				PlayMissSequence(result.Row, result.Column, isHuman);
 				break;
 			case ResultOfAttack.ShotAlready:
-				Audio.PlaySoundEffect(GameResources.GameSound("Error"));
+				Audio.PlaySoundEffect(Resources.GameSound("Error"));
 				break;
         }
     }
@@ -221,7 +276,7 @@ public static class GameController
 	/// This adds the players to the game before switching
 	/// state.
 	/// </remarks>
-	public static void EndDeployment()
+	public void EndDeployment()
 	{
 		//deploy the players
 		_theGame.AddDeployedPlayer(_human);
@@ -238,11 +293,11 @@ public static class GameController
 	/// <remarks>
 	/// Checks the attack result once the attack is complete
 	/// </remarks>
-	public static void Attack(int row, int col)
-    {
-        AttackResult result = _theGame.Shoot(row, col);
-        CheckAttackResult(result);
-    }
+	public void Attack(int row, int col)
+	{
+		AttackResult result = _theGame.Shoot(row, col);
+		CheckAttackResult(result);
+	}
 
 	/// <summary>
 	/// Gets the AI to attack.
@@ -250,7 +305,7 @@ public static class GameController
 	/// <remarks>
 	/// Checks the attack result once the attack is complete.
 	/// </remarks>
-	private static void AIAttack()
+	private void AIAttack()
 	{
 		AttackResult result = _theGame.Player.Attack();
 		CheckAttackResult(result);
@@ -264,7 +319,7 @@ public static class GameController
 	/// attack</param>
 	/// <remarks>Gets the AI to attack if the result switched
 	/// to the AI player.</remarks>
-	private static void CheckAttackResult(AttackResult result)
+	private void CheckAttackResult(AttackResult result)
 	{
         if (result.Value == ResultOfAttack.Miss)
 		{
@@ -287,7 +342,7 @@ public static class GameController
 	/// actions for the game to perform. The actions
 	/// performed depend upon the state of the game.
 	/// </remarks>
-	public static void HandleUserInput()
+	public void HandleUserInput()
 	{
 		//Read incoming input events
 		SwinGame.ProcessEvents();
@@ -295,29 +350,29 @@ public static class GameController
 		switch (CurrentState)
 		{
 			case GameState.ViewingMainMenu:
-				MenuController.HandleMainMenuInput();
+				_menuController.HandleMainMenuInput();
 				break;
 			case GameState.ViewingGameMenu:
-				MenuController.HandleGameMenuInput();
+				_menuController.HandleGameMenuInput();
 				break;
 			case GameState.AlteringSettings:
-				MenuController.HandleSetupMenuInput();
+				_menuController.HandleSetupMenuInput();
 				break;
 			case GameState.Deploying:
-				DeploymentController.HandleDeploymentInput();
+				_deploymentController.HandleDeploymentInput();
 				break;
 			case GameState.Discovering:
-				DiscoveryController.HandleDiscoveryInput();
+				_discoveryController.HandleDiscoveryInput();
 				break;
 			case GameState.EndingGame:
-				EndingGameController.HandleEndOfGameInput();
+				_endingGameController.HandleEndOfGameInput();
 				break;
 			case GameState.ViewingHighScores:
-				HighScoreController.HandleHighScoreInput();
+				highScoreController.HandleHighScoreInput();
 				break;
 		}
 
-		UtilityFunctions.UpdateAnimations();
+		screenController.UpdateAnimations();
 	}
 
 	/// <summary>
@@ -326,36 +381,36 @@ public static class GameController
 	/// <remarks>
 	/// What is drawn depends upon the state of the game.
 	/// </remarks>
-	public static void DrawScreen()
+	public void DrawScreen()
 	{
-		UtilityFunctions.DrawBackground();
+		screenController.DrawBackground();
 
 		switch (CurrentState)
 		{
 			case GameState.ViewingMainMenu:
-				MenuController.DrawMainMenu();
+				_menuController.DrawMainMenu();
 				break;
 			case GameState.ViewingGameMenu:
-				MenuController.DrawGameMenu();
+				_menuController.DrawGameMenu();
 				break;
 			case GameState.AlteringSettings:
-				MenuController.DrawSettings();
+				_menuController.DrawSettings();
 				break;
 			case GameState.Deploying:
-				DeploymentController.DrawDeployment();
+				_deploymentController.DrawDeployment();
 				break;
 			case GameState.Discovering:
-				DiscoveryController.DrawDiscovery();
+				_discoveryController.DrawDiscovery();
 				break;
 			case GameState.EndingGame:
-				EndingGameController.DrawEndOfGame();
+				_endingGameController.DrawEndOfGame();
 				break;
 			case GameState.ViewingHighScores:
-				HighScoreController.DrawHighScores();
+				highScoreController.DrawHighScores();
 				break;
 		}
 
-		UtilityFunctions.DrawAnimations();
+		screenController.DrawAnimations();
 
         SwinGame.RefreshScreen();
 	}
@@ -365,17 +420,17 @@ public static class GameController
 	/// so that it can be returned to.
 	/// </summary>
 	/// <param name="state">the new game state</param>
-	public static void AddNewState(GameState state)
+	public void AddNewState(GameState state)
 	{
 		_state.Push(state);
-		UtilityFunctions.Message = "";
+		screenController.Message = "";
 	}
 
 	/// <summary>
 	/// End the current state and add in the new state.
 	/// </summary>
 	/// <param name="newState">the new state of the game</param>
-	public static void SwitchState(GameState newState)
+	public void SwitchState(GameState newState)
 	{
 		EndCurrentState();
 		AddNewState(newState);
@@ -384,7 +439,7 @@ public static class GameController
 	/// <summary>
 	/// Ends the current state, returning to the prior state
 	/// </summary>
-	public static void EndCurrentState()
+	public void EndCurrentState()
 	{
 		_state.Pop();
 	}
@@ -393,7 +448,7 @@ public static class GameController
 	/// Sets the difficulty for the next level of the game.
 	/// </summary>
 	/// <param name="setting">the new difficulty level</param>
-	public static void SetDifficulty(AIOption setting)
+	public void SetDifficulty(AIOption setting)
 	{
 		_aiSetting = setting;
 	}

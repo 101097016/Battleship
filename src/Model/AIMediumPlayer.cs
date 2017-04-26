@@ -1,35 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 
-// The AIMediumPlayer is a type of AIPlayer where it will try and destroy a ship
-// if it has found a ship.
+/// <summary>
+/// The AIMediumPlayer is a type of AIPlayer where it will try and destroy a ship
+/// if it has found a ship.
+/// </summary>
 public class AIMediumPlayer : AIPlayer
 {
-	// Private enumarator for AI states. currently there are two states,
-	// the AI can be searching for a ship, or if it has found a ship it will
-	// target the same ship
+	/// <summary>
+	/// Private enumarator for AI states. currently there are two states,
+	/// the AI can be searching for a ship, or if it has found a ship it will
+	/// target the same ship
+	/// </summary>
 	private enum AIStates
 	{
 		Searching,
 		TargetingShip
 	}
 
-	// Declaring private fields for the Medium AI, it knows that it needs to Search (SearchCoords)
-	// and it knows its stack of targets that it has shot at.
+	/// <summary>
+	/// Declaring private fields for the Medium AI, it knows that it needs to Search (SearchCoords)
+	/// and it knows its stack of targets that it has shot at.
+	/// </summary>
 	private AIStates _CurrentState = AIStates.Searching;
 	private Stack<Location> _Targets = new Stack<Location>();
 
-	// Using class BattleShipGame for base code of shooting and swapping between players,
-	// it also checks if ships are destroyed.
+	/// <summary>
+	/// Initializes a new instance of the <see cref="T:AIMediumPlayer"/> class.
+	/// Using class BattleShipGame for base code of shooting and swapping between players,
+	/// it also checks if ships are destroyed.
+	/// </summary>
+	/// <param name="controller">Controller.</param>
 	public AIMediumPlayer(BattleShipsGame controller) : base(controller)
 	{
 	}
 
-	// GenerateCoordinates should generate random shooting coordinates
-	// only when it has not found a ship, or has destroyed a ship and 
-	// needs new shooting coordinates
-	// row = the generated row.
-	// column = the generated column.
+	/// <summary>
+	/// GenerateCoordinates should generate random shooting coordinates
+	/// only when it has not found a ship, or has destroyed a ship and 
+	/// needs new shooting coordinates
+	/// </summary>
+	/// <param name="row">the generated row.</param>
+	/// <param name="column">the generated column.</param>
 	protected override void GenerateCoords(ref int row, ref int column)
 	{
 		do
@@ -51,10 +63,12 @@ public class AIMediumPlayer : AIPlayer
 		} while (row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid.Item(row, column) != TileView.Sea); 
 	}
 
-	// TargetCoords is used when a ship has been hit and it will try and destroy
-	// this ship.
-	// row = row generated around the hit tile.
-	// column = column generated around the hit tile.
+	/// <summary>
+	/// TargetCoords is used when a ship has been hit and it will try and destroy
+	/// this ship.
+	/// </summary>
+	/// <param name="row">row generated around the hit tile.</param>
+	/// <param name="column">column generated around the hit tile.</param>
 	private void TargetCoords(ref int row, ref int column)
 	{
 		Location l = _Targets.Pop();
@@ -67,21 +81,25 @@ public class AIMediumPlayer : AIPlayer
 		column = l.Column;
 	}
 
-	// SearchCoords will randomly generate shots within the grid as long as its not hit that tile already.
-	// row = the generated row.
-	// column = the generated column.
+	/// <summary>
+	/// SearchCoords will randomly generate shots within the grid as long as its not hit that tile already.
+	/// </summary>
+	/// <param name="row">the generated row.</param>
+	/// <param name="column">the generated column.</param>
 	private void SearchCoords(ref int row, ref int column)
 	{
 		row = _Random.Next(0, EnemyGrid.Height);
 		column = _Random.Next(0, EnemyGrid.Width);
 	}
 
-	// ProcessShot will be called uppon when a ship is found.
-	// It will create a stack with targets it will try to hit. These targets
-	// will be around the tile that has been hit.
-	// row = the row it needs to process.
-	// col = the column it needs to process.
-	// result = the result og the last shot (should be hit).
+	/// <summary>
+	/// ProcessShot will be called uppon when a ship is found.
+	/// It will create a stack with targets it will try to hit. These targets
+	/// will be around the tile that has been hit.
+	/// </summary>
+	/// <param name="row">the row it needs to process.</param>
+	/// <param name="col">the column it needs to process.</param>
+	/// <param name="result">the result og the last shot (should be hit).</param>
 	protected override void ProcessShot(int row, int col, AttackResult result)
 	{
 
@@ -99,9 +117,11 @@ public class AIMediumPlayer : AIPlayer
 		}
 	}
 
-	// AddTarget will add the targets it will shoot onto a stack
-	// row = the row of the targets location.
-	// column = the column of the targets location.
+	/// <summary>
+	/// AddTarget will add the targets it will shoot onto a stack
+	/// </summary>
+	/// <param name="row">the row of the targets location.</param>
+	/// <param name="column">the column of the targets location.</param>
 	private void AddTarget(int row, int column)
 	{
 		if (row >= 0 && column >= 0 && row < EnemyGrid.Height && column < EnemyGrid.Width && EnemyGrid.Item(row, column) == TileView.Sea)

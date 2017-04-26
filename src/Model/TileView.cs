@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// The values that are visable for a given tile.
+/// The values that are visible for a given tile.
 /// </summary>
 public enum TileView
 {
