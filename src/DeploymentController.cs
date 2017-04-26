@@ -7,29 +7,29 @@ using SwinGameSDK;
 /// </summary>
 public class DeploymentController
 {
-	private const int SHIPS_TOP = 98;
-	private const int SHIPS_LEFT = 20;
-	private const int SHIPS_HEIGHT = 90;
-	private const int SHIPS_WIDTH = 300;
+	protected const int SHIPS_TOP = 98;
+	protected const int SHIPS_LEFT = 20;
+	protected const int SHIPS_HEIGHT = 90;
+	protected const int SHIPS_WIDTH = 300;
 
-	private const int TOP_BUTTONS_TOP = 72;
-	private const int TOP_BUTTONS_HEIGHT = 46;
+	protected const int TOP_BUTTONS_TOP = 72;
+	protected const int TOP_BUTTONS_HEIGHT = 46;
 
-	private const int PLAY_BUTTON_LEFT = 693;
-	private const int PLAY_BUTTON_WIDTH = 80;
+	protected const int PLAY_BUTTON_LEFT = 693;
+	protected const int PLAY_BUTTON_WIDTH = 80;
 
-	private const int UP_DOWN_BUTTON_LEFT = 410;
-	private const int LEFT_RIGHT_BUTTON_LEFT = 350;
+	protected const int UP_DOWN_BUTTON_LEFT = 410;
+	protected const int LEFT_RIGHT_BUTTON_LEFT = 350;
 
-	private const int RANDOM_BUTTON_LEFT = 547;
-	private const int RANDOM_BUTTON_WIDTH = 51;
+	protected const int RANDOM_BUTTON_LEFT = 547;
+	protected const int RANDOM_BUTTON_WIDTH = 51;
 
-	private const int DIR_BUTTONS_WIDTH = 47;
+	protected const int DIR_BUTTONS_WIDTH = 47;
 
-	private const int TEXT_OFFSET = 5;
+	protected const int TEXT_OFFSET = 5;
 
-	private static Direction _currentDirection = Direction.UpDown;
-	private static ShipName _selectedShip = ShipName.Tug;
+	protected static Direction _currentDirection = Direction.UpDown;
+	protected static ShipName _selectedShip = ShipName.Tug;
 
 	internal GameController _controller;
 
@@ -41,7 +41,7 @@ public class DeploymentController
 	/// of the ships to add, randomising deployment, end then ending
 	/// deployment
 	/// </remarks>
-	public void HandleDeploymentInput()
+	public virtual void HandleDeploymentInput()
 	{
 		if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
 		{
@@ -101,7 +101,7 @@ public class DeploymentController
 	/// If the click is in the grid it deploys to the selected location
 	/// with the indicated direction
 	/// </remarks>
-	private void DoDeployClick()
+	protected virtual void DoDeployClick()
 	{
 		Point2D mouse = SwinGame.MousePosition();
 
@@ -134,7 +134,7 @@ public class DeploymentController
 	/// Draws the deployment screen showing the field and the ships
 	/// that the player can deploy.
 	/// </summary>
-	public void DrawDeployment()
+	public virtual void DrawDeployment()
 	{
 		_controller.screenController.DrawField(_controller.HumanPlayer.PlayerGrid, _controller.HumanPlayer, true);
 
@@ -188,7 +188,7 @@ public class DeploymentController
 	/// Gets the ship that the mouse is currently over in the selection panel.
 	/// </summary>
 	/// <returns>The ship selected or none</returns>
-	private static ShipName GetShipMouseIsOver()
+	protected static ShipName GetShipMouseIsOver()
 	{
 		foreach (ShipName sn in Enum.GetValues(typeof(ShipName)))
 		{

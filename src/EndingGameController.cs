@@ -12,7 +12,7 @@ public class EndingGameController
 	/// <summary>
 	/// Draw the end of the game screen, shows the win/lose state
 	/// </summary>
-	public void DrawEndOfGame()
+	public virtual void DrawEndOfGame()
 	{
 		_controller.screenController.DrawField(_controller.ComputerPlayer.PlayerGrid, _controller.ComputerPlayer, true);
 		_controller.screenController.DrawSmallField(_controller.HumanPlayer.PlayerGrid, _controller.HumanPlayer);
@@ -31,7 +31,7 @@ public class EndingGameController
 	/// Handle the input during the end of the game. Any interaction
 	/// will result in it reading in the highscore.
 	/// </summary>
-	public void HandleEndOfGameInput()
+	public virtual void HandleEndOfGameInput()
 	{
 		if (SwinGame.MouseClicked(MouseButton.LeftButton) || SwinGame.KeyTyped(KeyCode.vk_RETURN) || SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
 		{

@@ -13,14 +13,14 @@ public class HighScoreController
 {
 	internal GameController _controller;
 
-	private const int NAME_WIDTH = 3;
-	private const int SCORES_LEFT = 490;
+	protected const int NAME_WIDTH = 3;
+	protected const int SCORES_LEFT = 490;
 
 	/// <summary>
 	/// The score structure is used to keep the name and
 	/// score of the top players together.
 	/// </summary>
-	private struct Score : IComparable
+	protected struct Score : IComparable
 	{
 		public string Name;
 		public int Value;
@@ -43,7 +43,7 @@ public class HighScoreController
 		}
 	}
 
-	private List<Score> _Scores = new List<Score>();
+	protected List<Score> _Scores = new List<Score>();
 
 	/// <summary>
 	/// Loads the scores from the highscores text file.
@@ -55,7 +55,7 @@ public class HighScoreController
 	/// 
 	/// Where NNN is the name and SSS is the score
 	/// </remarks>
-	private void LoadScores()
+	protected virtual void LoadScores()
 	{
 		string filename = SwinGame.PathToResource("highscores.txt");
 
@@ -90,7 +90,7 @@ public class HighScoreController
 	/// 
 	/// Where NNN is the name and SSS is the score
 	/// </remarks>
-	private void SaveScores()
+	protected virtual void SaveScores()
 	{
 		string filename = SwinGame.PathToResource("highscores.txt");
 
@@ -109,7 +109,7 @@ public class HighScoreController
 	/// <summary>
 	/// Draws the high scores to the screen.
 	/// </summary>
-	public void DrawHighScores()
+	public virtual void DrawHighScores()
 	{
 		const int SCORES_HEADING = 40;
 		const int SCORES_TOP = 80;
@@ -145,7 +145,7 @@ public class HighScoreController
 	/// Handles the user input during the top score screen.
 	/// </summary>
 	/// <remarks></remarks>
-	public void HandleHighScoreInput()
+	public virtual void HandleHighScoreInput()
 	{
 		if (SwinGame.MouseClicked(MouseButton.LeftButton) || SwinGame.KeyTyped(KeyCode.vk_ESCAPE) || SwinGame.KeyTyped(KeyCode.vk_RETURN))
 		{
@@ -160,7 +160,7 @@ public class HighScoreController
 	/// <remarks>
 	/// This verifies if the score is a highscore.
 	/// </remarks>
-	public void ReadHighScore(int value)
+	public virtual void ReadHighScore(int value)
 	{
 		const int ENTRY_TOP = 500;
 

@@ -22,20 +22,20 @@ public class ScreenController
 
 	public const int SHIP_GAP = 3;
 
-	private static readonly Color SMALL_SEA = SwinGame.RGBAColor(6, 60, 94, 255);
-	private static readonly Color SMALL_SHIP = Color.Gray;
-	private static readonly Color SMALL_MISS = SwinGame.RGBAColor(1, 147, 220, 255);
-	private static readonly Color SMALL_HIT = SwinGame.RGBAColor(169, 24, 37, 255);
+	protected static readonly Color SMALL_SEA = SwinGame.RGBAColor(6, 60, 94, 255);
+	protected static readonly Color SMALL_SHIP = Color.Gray;
+	protected static readonly Color SMALL_MISS = SwinGame.RGBAColor(1, 147, 220, 255);
+	protected static readonly Color SMALL_HIT = SwinGame.RGBAColor(169, 24, 37, 255);
 
-	private static readonly Color LARGE_SEA = SwinGame.RGBAColor(6, 60, 94, 255);
-	private static readonly Color LARGE_SHIP = Color.Gray;
-	private static readonly Color LARGE_MISS = SwinGame.RGBAColor(1, 147, 220, 255);
-	private static readonly Color LARGE_HIT = SwinGame.RGBAColor(252, 2, 3, 255);
+	protected static readonly Color LARGE_SEA = SwinGame.RGBAColor(6, 60, 94, 255);
+	protected static readonly Color LARGE_SHIP = Color.Gray;
+	protected static readonly Color LARGE_MISS = SwinGame.RGBAColor(1, 147, 220, 255);
+	protected static readonly Color LARGE_HIT = SwinGame.RGBAColor(252, 2, 3, 255);
 
-	private static readonly Color OUTLINE_COLOR = SwinGame.RGBAColor(5, 55, 88, 255);
-	private static readonly Color SHIP_FILL_COLOR = Color.Gray;
-	private static readonly Color SHIP_OUTLINE_COLOR = Color.White;
-	private static readonly Color MESSAGE_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
+	protected static readonly Color OUTLINE_COLOR = SwinGame.RGBAColor(5, 55, 88, 255);
+	protected static readonly Color SHIP_FILL_COLOR = Color.Gray;
+	protected static readonly Color SHIP_OUTLINE_COLOR = Color.White;
+	protected static readonly Color MESSAGE_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
 
 	public const int ANIMATION_CELLS = 7;
 	public const int FRAMES_PER_CELL = 8;
@@ -109,7 +109,7 @@ public class ScreenController
 	/// <param name="cellWidth">the width of each cell</param>
 	/// <param name="cellHeight">the height of each cell</param>
 	/// <param name="cellGap">the gap between the cells</param>
-	private void DrawCustomField(ISeaGrid grid, Player thePlayer, bool small, bool showShips, int left, int top, int width, int height, int cellWidth, int cellHeight, int cellGap)
+	protected virtual void DrawCustomField(ISeaGrid grid, Player thePlayer, bool small, bool showShips, int left, int top, int width, int height, int cellWidth, int cellHeight, int cellGap)
 	{
 		//SwinGame.FillRectangle(Color.Blue, left, top, width, height)
 
@@ -231,7 +231,7 @@ public class ScreenController
 	/// <summary>
 	/// Draws the message to the screen
 	/// </summary>
-	public void DrawMessage()
+	public virtual void DrawMessage()
 	{
 		SwinGame.DrawText(Message, MESSAGE_COLOR, _controller.Resources.GameFont("Courier"), FIELD_LEFT, MESSAGE_TOP);
 	}
@@ -239,7 +239,7 @@ public class ScreenController
 	/// <summary>
 	/// Draws the background for the current state of the game
 	/// </summary>
-	public void DrawBackground()
+	public virtual void DrawBackground()
 	{
 
 		switch (_controller.CurrentState)
@@ -275,9 +275,9 @@ public class ScreenController
 		AddAnimation(row, col, "Splash");
 	}
 
-	private List<Sprite> _Animations = new List<Sprite>();
+	protected List<Sprite> _Animations = new List<Sprite>();
 
-	private void AddAnimation(int row, int col, string image)
+	protected void AddAnimation(int row, int col, string image)
 	{
 		Sprite s = null;
 		Bitmap imgObj = _controller.Resources.GameImage(image);

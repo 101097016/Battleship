@@ -7,7 +7,7 @@ using SwinGameSDK;
 /// managing user input, and displaying the current state of the
 /// game.
 /// </summary>
-public class GameController
+public sealed class GameController
 {
 	private BattleShipsGame _theGame;
 	private Player _human;

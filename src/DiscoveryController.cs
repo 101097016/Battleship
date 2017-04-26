@@ -15,7 +15,7 @@ public class DiscoveryController
 	/// Escape opens the game menu. Clicking the mouse will
 	/// attack a location.
 	/// </remarks>
-	public void HandleDiscoveryInput()
+	public virtual void HandleDiscoveryInput()
 	{
 		if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
 		{
@@ -54,7 +54,7 @@ public class DiscoveryController
 	/// <summary>
 	/// Draws the game during the attack phase.
 	/// </summary>s
-	public void DrawDiscovery()
+	public virtual void DrawDiscovery()
 	{
 		const int SCORES_LEFT = 172;
 		const int SHOTS_TOP = 157;
