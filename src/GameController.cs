@@ -173,31 +173,34 @@ public static class GameController
 			UtilityFunctions.Message = "The AI " + result;
 		}
 
-		switch (result.Value)
+        switch (result.Value)
 		{
 			case ResultOfAttack.Destroyed:
 				PlayHitSequence(result.Row, result.Column, isHuman);
 				Audio.PlaySoundEffect(GameResources.GameSound("Sink"));
-				break;
+                break;
 			case ResultOfAttack.GameOver:
-				PlayHitSequence(result.Row, result.Column, isHuman);
+                PlayHitSequence(result.Row, result.Column, isHuman);
 				Audio.PlaySoundEffect(GameResources.GameSound("Sink"));
 
-				while (Audio.SoundEffectPlaying(GameResources.GameSound("Sink")))
+                //JED, ERROR FOUND HANGING HERE ON GAMEOVER
+                /*
+                while (Audio.SoundEffectPlaying(GameResources.GameSound("Sink")))
 				{
 					SwinGame.Delay(10);
 					SwinGame.RefreshScreen();
 				}
+                */
 
-				if (HumanPlayer.IsDestroyed)
+                if (HumanPlayer.IsDestroyed)
 				{
 					Audio.PlaySoundEffect(GameResources.GameSound("Lose"));
 				}
 				else
 				{
 					Audio.PlaySoundEffect(GameResources.GameSound("Winner"));
-				}
-				break;
+                }
+                break;
 			case ResultOfAttack.Hit:
 				PlayHitSequence(result.Row, result.Column, isHuman);
 				break;
@@ -207,8 +210,8 @@ public static class GameController
 			case ResultOfAttack.ShotAlready:
 				Audio.PlaySoundEffect(GameResources.GameSound("Error"));
 				break;
-		}
-	}
+        }
+    }
 
 	/// <summary>
 	/// Completes the deployment phase of the game and
@@ -236,10 +239,10 @@ public static class GameController
 	/// Checks the attack result once the attack is complete
 	/// </remarks>
 	public static void Attack(int row, int col)
-	{
-		AttackResult result = _theGame.Shoot(row, col);
-		CheckAttackResult(result);
-	}
+    {
+        AttackResult result = _theGame.Shoot(row, col);
+        CheckAttackResult(result);
+    }
 
 	/// <summary>
 	/// Gets the AI to attack.
@@ -263,7 +266,7 @@ public static class GameController
 	/// to the AI player.</remarks>
 	private static void CheckAttackResult(AttackResult result)
 	{
-		if (result.Value == ResultOfAttack.Miss)
+        if (result.Value == ResultOfAttack.Miss)
 		{
 			if (_theGame.Player == ComputerPlayer)
 			{
@@ -273,7 +276,7 @@ public static class GameController
 		else if (result.Value == ResultOfAttack.GameOver)
 		{
 			SwitchState(GameState.EndingGame);
-		}
+        }
 	}
 
 	/// <summary>
@@ -354,7 +357,7 @@ public static class GameController
 
 		UtilityFunctions.DrawAnimations();
 
-		SwinGame.RefreshScreen();
+        SwinGame.RefreshScreen();
 	}
 
 	/// <summary>

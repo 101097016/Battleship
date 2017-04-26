@@ -70,17 +70,17 @@ public class BattleShipsGame
 
 		newAttack = Player.Shoot(row, col);
 
-		// Will exit the game when all players ships are destroyed
-		if (_players[otherPlayer].IsDestroyed)
+        // Will exit the game when all players ships are destroyed
+        if (_players[otherPlayer].IsDestroyed)
 		{
 			newAttack = new AttackResult(ResultOfAttack.GameOver, newAttack.Ship, newAttack.Text, row, col);
-		}
+        }
 
-		if (AttackCompleted != null)
+        if (AttackCompleted != null)
 			AttackCompleted(this, newAttack);
-
-		// Change player if the last hit was a miss
-		if (newAttack.Value == ResultOfAttack.Miss)
+        
+        // Change player if the last hit was a miss
+        if (newAttack.Value == ResultOfAttack.Miss)
 		{
 			_playerIndex = otherPlayer;
 		}

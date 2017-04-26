@@ -15,7 +15,7 @@ static class DiscoveryController
 	/// attack a location.
 	/// </remarks>
 	public static void HandleDiscoveryInput()
-	{
+	{        
 		if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
 		{
 			GameController.AddNewState(GameState.ViewingGameMenu);
@@ -44,9 +44,9 @@ static class DiscoveryController
 		if (row >= 0 && row < GameController.HumanPlayer.EnemyGrid.Height)
 		{
 			if (col >= 0 && col < GameController.HumanPlayer.EnemyGrid.Width)
-			{
-				GameController.Attack(row, col);
-			}
+            {
+                GameController.Attack(row, col);
+            }
 		}
 	}
 
@@ -59,7 +59,7 @@ static class DiscoveryController
 		const int SHOTS_TOP = 157;
 		const int HITS_TOP = 206;
 		const int SPLASH_TOP = 256;
-
+        
 		if ((SwinGame.KeyDown(KeyCode.vk_LSHIFT) || SwinGame.KeyDown(KeyCode.vk_RSHIFT)) && SwinGame.KeyDown(KeyCode.vk_c))
 		{
 			UtilityFunctions.DrawField(GameController.HumanPlayer.EnemyGrid, GameController.ComputerPlayer, true);
