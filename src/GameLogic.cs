@@ -8,16 +8,22 @@ static class GameLogic
 		SwinGame.OpenGraphicsWindow("Battle Ships", 800, 600);
 
 		//Load Resources
-		GameResources.LoadResources();
-
-		SwinGame.PlayMusic(GameResources.GameMusic("Background"));
+		var resources = new GameResources();
+		resources.LoadResources();
 
 		//Game Loop
+		var controller = new GameController(resources: resources,
+											screenController: new ScreenController(),
+											menuController: new MenuController(),
+											deploymentController: new DeploymentController(),
+											discoveryController: new DiscoveryController(),
+											endingGameController: new EndingGameController(),
+											highScoreController: new HighScoreController());
 		do
 		{
-			GameController.HandleUserInput();
-			GameController.DrawScreen();
-		} while (!(SwinGame.WindowCloseRequested() == true || GameController.CurrentState == GameState.Quitting));
+			controller.HandleUserInput();
+			controller.DrawScreen();
+		} while (!(SwinGame.WindowCloseRequested() == true || controller.CurrentState == GameState.Quitting));
 
 		SwinGame.StopMusic();
 

@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using SwinGameSDK;
 
 /// <summary>
 /// The battle phase is handled by the DiscoveryController.
 /// </summary>
-static class DiscoveryController
+public class DiscoveryController
 {
+	internal GameController _controller;
 
 	/// <summary>
 	/// Handles input during the discovery phase of the game.
@@ -14,11 +15,11 @@ static class DiscoveryController
 	/// Escape opens the game menu. Clicking the mouse will
 	/// attack a location.
 	/// </remarks>
-	public static void HandleDiscoveryInput()
+	public void HandleDiscoveryInput()
 	{
 		if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE))
 		{
-			GameController.AddNewState(GameState.ViewingGameMenu);
+			_controller.AddNewState(GameState.ViewingGameMenu);
 		}
 
 		if (SwinGame.MouseClicked(MouseButton.LeftButton))
@@ -30,7 +31,7 @@ static class DiscoveryController
 	/// <summary>
 	/// Attack the location that the mouse if over.
 	/// </summary>
-	private static void DoAttack()
+	private void DoAttack()
 	{
 		Point2D mouse = SwinGame.MousePosition();
 
@@ -38,14 +39,14 @@ static class DiscoveryController
 		//Calculate the row/col clicked
 		int row = 0;
 		int col = 0;
-		row = Convert.ToInt32(Math.Floor((mouse.Y - UtilityFunctions.FIELD_TOP) / (UtilityFunctions.CELL_HEIGHT + UtilityFunctions.CELL_GAP)));
-		col = Convert.ToInt32(Math.Floor((mouse.X - UtilityFunctions.FIELD_LEFT) / (UtilityFunctions.CELL_WIDTH + UtilityFunctions.CELL_GAP)));
+		row = Convert.ToInt32(Math.Floor((mouse.Y - ScreenController.FIELD_TOP) / (ScreenController.CELL_HEIGHT + ScreenController.CELL_GAP)));
+		col = Convert.ToInt32(Math.Floor((mouse.X - ScreenController.FIELD_LEFT) / (ScreenController.CELL_WIDTH + ScreenController.CELL_GAP)));
 
-		if (row >= 0 && row < GameController.HumanPlayer.EnemyGrid.Height)
+		if (row >= 0 && row < _controller.HumanPlayer.EnemyGrid.Height)
 		{
-			if (col >= 0 && col < GameController.HumanPlayer.EnemyGrid.Width)
+			if (col >= 0 && col < _controller.HumanPlayer.EnemyGrid.Width)
 			{
-				GameController.Attack(row, col);
+				_controller.Attack(row, col);
 			}
 		}
 	}
@@ -53,7 +54,7 @@ static class DiscoveryController
 	/// <summary>
 	/// Draws the game during the attack phase.
 	/// </summary>s
-	public static void DrawDiscovery()
+	public void DrawDiscovery()
 	{
 		const int SCORES_LEFT = 172;
 		const int SHOTS_TOP = 157;
@@ -62,19 +63,19 @@ static class DiscoveryController
 
 		if ((SwinGame.KeyDown(KeyCode.vk_LSHIFT) || SwinGame.KeyDown(KeyCode.vk_RSHIFT)) && SwinGame.KeyDown(KeyCode.vk_c))
 		{
-			UtilityFunctions.DrawField(GameController.HumanPlayer.EnemyGrid, GameController.ComputerPlayer, true);
+			_controller.screenController.DrawField(_controller.HumanPlayer.EnemyGrid, _controller.ComputerPlayer, true);
 		}
 		else
 		{
-			UtilityFunctions.DrawField(GameController.HumanPlayer.EnemyGrid, GameController.ComputerPlayer, false);
+			_controller.screenController.DrawField(_controller.HumanPlayer.EnemyGrid, _controller.ComputerPlayer, false);
 		}
 
-		UtilityFunctions.DrawSmallField(GameController.HumanPlayer.PlayerGrid, GameController.HumanPlayer);
-		UtilityFunctions.DrawMessage();
+		_controller.screenController.DrawSmallField(_controller.HumanPlayer.PlayerGrid, _controller.HumanPlayer);
+		_controller.screenController.DrawMessage();
 
-		SwinGame.DrawText(GameController.HumanPlayer.Shots.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, SHOTS_TOP);
-		SwinGame.DrawText(GameController.HumanPlayer.Hits.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, HITS_TOP);
-		SwinGame.DrawText(GameController.HumanPlayer.Missed.ToString(), Color.White, GameResources.GameFont("Menu"), SCORES_LEFT, SPLASH_TOP);
+		SwinGame.DrawText(_controller.HumanPlayer.Shots.ToString(), Color.White, _controller.Resources.GameFont("Menu"), SCORES_LEFT, SHOTS_TOP);
+		SwinGame.DrawText(_controller.HumanPlayer.Hits.ToString(), Color.White, _controller.Resources.GameFont("Menu"), SCORES_LEFT, HITS_TOP);
+		SwinGame.DrawText(_controller.HumanPlayer.Missed.ToString(), Color.White, _controller.Resources.GameFont("Menu"), SCORES_LEFT, SPLASH_TOP);
 	}
 
 }
