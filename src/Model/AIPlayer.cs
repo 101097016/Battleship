@@ -91,6 +91,14 @@ public abstract class AIPlayer : Player
 		{
 			return !(@this == other);
 		}
+
+		// shut up, compiler
+		public override int GetHashCode()
+		{
+#pragma warning disable RECS0025 // Non-readonly field referenced in 'GetHashCode()'
+			return _Column * 10 + _Row;
+#pragma warning restore RECS0025 // Non-readonly field referenced in 'GetHashCode'
+		}
 	}
 
 	/// <summary>
