@@ -18,13 +18,20 @@ public sealed class GameController
 	private AIOption _aiSetting;
 
 	private GameResources _resources;
+	private ScreenController _screenController;
 	private MenuController _menuController;
 	private DeploymentController _deploymentController;
 	private DiscoveryController _discoveryController;
 	private EndingGameController _endingGameController;
+	private HighScoreController _highScoreController;
 
-	internal HighScoreController highScoreController;
-	internal ScreenController screenController;
+	internal ScreenController screenController
+	{
+		get { return _screenController; }	}
+	internal HighScoreController highScoreController
+	{
+		get { return _highScoreController; }
+	}
 
 	/// <summary>
 	/// Returns or sets the current game resources.
@@ -96,8 +103,8 @@ public sealed class GameController
 		//install the controllers and resources
 		Resources = resources;
 
-		this.screenController = screenController;
-		this.screenController._controller = this;
+		_screenController = screenController;
+		_screenController._controller = this;
 
 		_menuController = menuController;
 		_menuController._controller = this;
@@ -111,8 +118,8 @@ public sealed class GameController
 		_endingGameController = endingGameController;
 		_endingGameController._controller = this;
 
-		this.highScoreController = highScoreController;
-		this.highScoreController._controller = this;
+		_highScoreController = highScoreController;
+		_highScoreController._controller = this;
 
 		//bottom state will be quitting. If player exits main menu then the game is over
 		_state.Push(GameState.Quitting);

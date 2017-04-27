@@ -8,8 +8,7 @@ static class GameLogic
 		SwinGame.OpenGraphicsWindow("Battle Ships", 800, 600);
 
 		//Load Resources
-		var resources = new GameResources();
-		resources.LoadResources();
+		var resources = new GameResources("ThemeDefault", true);
 
 		//Game Loop
 		var controller = new GameController(resources: resources,
@@ -28,6 +27,6 @@ static class GameLogic
 		SwinGame.StopMusic();
 
 		//Free Resources and Close Audio, to end the program.
-		GameResources.FreeResources();
+		resources.FreeResources();
 	}
 }
