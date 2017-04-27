@@ -1,6 +1,5 @@
 ﻿using SwinGameSDK;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 /// <summary>
 /// The Resources Class stores all of the Games Media Resources, such as Images, Fonts
