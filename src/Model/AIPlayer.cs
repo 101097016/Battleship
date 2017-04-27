@@ -132,7 +132,7 @@ public abstract class AIPlayer : Player
 		int column = 0;
 
 		// keep hitting until there's a miss
-		do 
+		do
 		{
 			Delay();
 
@@ -140,7 +140,7 @@ public abstract class AIPlayer : Player
 			GenerateCoords(ref row, ref column);
 
 			// take shot
-			result = _game.Shoot(row, column); 
+			result = _game.Shoot(row, column);
 			ProcessShot(row, column, result);
 		} while (result.Value != ResultOfAttack.Miss && result.Value != ResultOfAttack.GameOver && !SwinGame.WindowCloseRequested());
 

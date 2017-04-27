@@ -244,11 +244,15 @@ public sealed class GameController
 				PlayHitSequence(result.Row, result.Column, isHuman);
 				Audio.PlaySoundEffect(Resources.GameSound("Sink"));
 
+				//JED, removed this loop, was causeing hanging during the end game. With the screech of a background music this
+				//sound overlap is inaudible.
+				/*
 				while (Audio.SoundEffectPlaying(Resources.GameSound("Sink")))
 				{
 					SwinGame.Delay(10);
 					SwinGame.RefreshScreen();
 				}
+				*/
 
 				if (HumanPlayer.IsDestroyed)
 				{
