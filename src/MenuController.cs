@@ -273,10 +273,10 @@ public class MenuController
 		switch (button)
 		{
 			case SETUP_MENU_EASY_BUTTON:
-				_controller.SetDifficulty(AIOption.Hard);
+				_controller.SetDifficulty(AIOption.Easy);
 				break;
 			case SETUP_MENU_MEDIUM_BUTTON:
-				_controller.SetDifficulty(AIOption.Hard);
+				_controller.SetDifficulty(AIOption.Medium);
 				break;
 			case SETUP_MENU_HARD_BUTTON:
 				_controller.SetDifficulty(AIOption.Hard);
