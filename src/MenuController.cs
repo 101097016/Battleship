@@ -18,9 +18,10 @@ public class MenuController
 	/// </remarks>
 	protected static readonly string[][] _menuStructure =
 	{
-		new string[] {"PLAY", "SETUP", "SCORES", "QUIT"},
+		new string[] {"PLAY", "DIFFICULTY", "THEME", "SCORES", "QUIT"},
 		new string[] {"RETURN", "SURRENDER", "QUIT"},
-		new string[] {"EASY", "MEDIUM", "HARD"}
+		new string[] {"EASY", "MEDIUM", "HARD"},
+		new string[] {"DEFAULT", "PIRATE"}
 	};
 
 	protected const int MENU_TOP = 575;
@@ -34,16 +35,22 @@ public class MenuController
 	protected const int MAIN_MENU = 0;
 	protected const int GAME_MENU = 1;
 	protected const int SETUP_MENU = 2;
+	protected const int THEMES_MENU = 3;
 
 	protected const int MAIN_MENU_PLAY_BUTTON = 0;
 	protected const int MAIN_MENU_SETUP_BUTTON = 1;
-	protected const int MAIN_MENU_TOP_SCORES_BUTTON = 2;
-	protected const int MAIN_MENU_QUIT_BUTTON = 3;
+	protected const int MAIN_MENU_THEMES_BUTTON = 2;
+	protected const int MAIN_MENU_TOP_SCORES_BUTTON = 3;
+	protected const int MAIN_MENU_QUIT_BUTTON = 4;
 
 	protected const int SETUP_MENU_EASY_BUTTON = 0;
 	protected const int SETUP_MENU_MEDIUM_BUTTON = 1;
 	protected const int SETUP_MENU_HARD_BUTTON = 2;
 	protected const int SETUP_MENU_EXIT_BUTTON = 3;
+
+	protected const int THEMES_MENU_THEME_DEFAULT_BUTTON = 0;
+	protected const int THEMES_MENU_THEME_PIRATE_BUTTON = 1;
+	protected const int THEMES_MENU_EXIT_BUTTON = 2;
 
 	protected const int GAME_MENU_RETURN_BUTTON = 0;
 	protected const int GAME_MENU_SURRENDER_BUTTON = 1;
@@ -61,7 +68,7 @@ public class MenuController
 	}
 
 	/// <summary>
-	/// Handles the processing of user input when the main menu is showing
+	/// Handles the processing of user input when the difficulty menu is showing
 	/// </summary>
 	public void HandleSetupMenuInput()
 	{
@@ -69,7 +76,17 @@ public class MenuController
 
 		if (!handled)
 		{
-			HandleMenuInput(MAIN_MENU, 0, 0);
+			HandleMainMenuInput();
+		}
+	}
+
+	public void HandleThemeMenuInput()
+	{
+		bool handled = HandleMenuInput(THEMES_MENU, 1, 1);
+
+		if (!handled)
+		{
+			HandleMainMenuInput();
 		}
 	}
 
@@ -159,6 +176,18 @@ public class MenuController
 	}
 
 	/// <summary>
+	/// Draws the themes menu to the screen.
+	/// </summary>
+	/// <remarks>
+	/// Also shows the main menu
+	/// </remarks>
+	public void DrawThemesMenu()
+	{
+		DrawButtons(MAIN_MENU);
+		DrawButtons(THEMES_MENU, 1, 1);
+	}
+
+	/// <summary>
 	/// Draw the buttons associated with a top level menu.
 	/// </summary>
 	/// <param name="menu">the index of the menu to draw</param>
@@ -238,6 +267,9 @@ public class MenuController
 			case GAME_MENU:
 				PerformGameMenuAction(button);
 				break;
+			case THEMES_MENU:
+				PerformThemesMenuAction(button);
+				break;
 		}
 	}
 
@@ -254,6 +286,9 @@ public class MenuController
 				break;
 			case MAIN_MENU_SETUP_BUTTON:
 				_controller.AddNewState(GameState.AlteringSettings);
+				break;
+			case MAIN_MENU_THEMES_BUTTON:
+				_controller.AddNewState(GameState.AlteringTheme);
 				break;
 			case MAIN_MENU_TOP_SCORES_BUTTON:
 				_controller.AddNewState(GameState.ViewingHighScores);
@@ -283,6 +318,27 @@ public class MenuController
 				break;
 		}
 		//Always end state - handles exit button as well
+		_controller.EndCurrentState();
+	}
+
+	/// <summary>
+	/// The theme menu was clicked, perform the button's action.
+	/// </summary>
+	/// <param name="button">the button pressed</param>
+	protected virtual void PerformThemesMenuAction(int button)
+	{
+		switch (button)
+		{
+			case THEMES_MENU_THEME_DEFAULT_BUTTON:
+				_controller.Resources.FreeResources();
+				_controller.Resources = new GameResources("ThemeDefault");
+				break;
+			case THEMES_MENU_THEME_PIRATE_BUTTON:
+				_controller.Resources.FreeResources();
+				_controller.Resources = new GameResources("ThemePirate");
+				break;
+		}
+		//Always end state - handles cancel button as well
 		_controller.EndCurrentState();
 	}
 

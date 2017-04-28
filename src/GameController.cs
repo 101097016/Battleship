@@ -365,6 +365,9 @@ public sealed class GameController
 			case GameState.AlteringSettings:
 				_menuController.HandleSetupMenuInput();
 				break;
+			case GameState.AlteringTheme:
+				_menuController.HandleThemeMenuInput();
+				break;
 			case GameState.Deploying:
 				_deploymentController.HandleDeploymentInput();
 				break;
@@ -402,6 +405,9 @@ public sealed class GameController
 				break;
 			case GameState.AlteringSettings:
 				_menuController.DrawSettings();
+				break;
+			case GameState.AlteringTheme:
+				_menuController.DrawThemesMenu();
 				break;
 			case GameState.Deploying:
 				_deploymentController.DrawDeployment();

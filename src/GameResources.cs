@@ -110,7 +110,7 @@ public class GameResources
 	private string _ThemeDirName;
 
 
-	public GameResources(string themeDirName, bool playIntro)
+	public GameResources(string themeDirName, bool playIntro = false)
 	{
 		_ThemeDirName = themeDirName;
 		LoadResources(playIntro);

@@ -247,6 +247,7 @@ public class ScreenController
 			case GameState.ViewingMainMenu:
 			case GameState.ViewingGameMenu:
 			case GameState.AlteringSettings:
+			case GameState.AlteringTheme:
 			case GameState.ViewingHighScores:
 				SwinGame.DrawBitmap(_controller.Resources.GameImage("Menu"), 0, 0);
 				break;
