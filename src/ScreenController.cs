@@ -40,6 +40,8 @@ public class ScreenController
 	public const int ANIMATION_CELLS = 7;
 	public const int FRAMES_PER_CELL = 8;
 
+	private AIOption _aiSetting;
+
 	/// <summary>
 	/// Determines if the mouse is in a given rectangle.
 	/// </summary>
@@ -264,6 +266,7 @@ public class ScreenController
 		}
 
 		SwinGame.DrawFramerate(675, 585, _controller.Resources.GameFont("CourierSmall"));
+		SwinGame.DrawText("AI Difficulty: " + _aiSetting, Color.Red, 500, 585);
 	}
 
 	public void AddExplosion(int row, int col)

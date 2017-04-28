@@ -465,5 +465,4 @@ public sealed class GameController
 	{
 		_aiSetting = setting;
 	}
-
 }
