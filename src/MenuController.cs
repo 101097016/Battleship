@@ -59,6 +59,8 @@ public class MenuController
 	protected static readonly Color MENU_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
 	protected static readonly Color HIGHLIGHT_COLOR = SwinGame.RGBAColor(1, 57, 86, 255);
 
+	private string Difficulty = "Easy";
+
 	/// <summary>
 	/// Handles the processing of user input when the main menu is showing
 	/// </summary>
@@ -145,7 +147,7 @@ public class MenuController
 	{
 		//Clears the Screen to Black
 		//SwinGame.DrawText("Main Menu", Color.White, GameFont("ArialLarge"), 50, 50)
-
+		SwinGame.DrawText("Difficulty: " + Difficulty, Color.Red, 500, 585);
 		DrawButtons(MAIN_MENU);
 	}
 
@@ -156,7 +158,7 @@ public class MenuController
 	{
 		//Clears the Screen to Black
 		//SwinGame.DrawText("Paused", Color.White, GameFont("ArialLarge"), 50, 50)
-
+		SwinGame.DrawText("Difficulty: " + Difficulty, Color.Red, 500, 585);
 		DrawButtons(GAME_MENU);
 	}
 
@@ -309,12 +311,15 @@ public class MenuController
 		{
 			case SETUP_MENU_EASY_BUTTON:
 				_controller.SetDifficulty(AIOption.Easy);
+				Difficulty = "Easy";
 				break;
 			case SETUP_MENU_MEDIUM_BUTTON:
 				_controller.SetDifficulty(AIOption.Medium);
+				Difficulty = "Medium";
 				break;
 			case SETUP_MENU_HARD_BUTTON:
 				_controller.SetDifficulty(AIOption.Hard);
+				Difficulty = "Hard";
 				break;
 		}
 		//Always end state - handles exit button as well

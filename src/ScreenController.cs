@@ -266,7 +266,6 @@ public class ScreenController
 		}
 
 		SwinGame.DrawFramerate(675, 585, _controller.Resources.GameFont("CourierSmall"));
-		SwinGame.DrawText("AI Difficulty: " + _aiSetting, Color.Red, 500, 585);
 	}
 
 	public void AddExplosion(int row, int col)
