@@ -16,9 +16,15 @@ public class ScreenController
 
 	public const int MESSAGE_TOP = 548;
 
-	public const int CELL_WIDTH = 40;
-	public const int CELL_HEIGHT = 40;
-	public const int CELL_GAP = 2;
+	//public const int CELL_WIDTH = 40;
+	//public const int CELL_HEIGHT = 40;
+	//public const int CELL_GAP = 2;
+	//public static int CELL_WIDTH = 40;
+	//public static int CELL_HEIGHT = 40;
+	//public static int CELL_GAP = 2;
+	public static int CELL_WIDTH = 40;
+	public static int CELL_HEIGHT = 40;
+	public static int CELL_GAP = 2;
 
 	public const int SHIP_GAP = 3;
 
@@ -88,11 +94,39 @@ public class ScreenController
 		const int SMALL_FIELD_TOP = 373;
 		const int SMALL_FIELD_WIDTH = 166;
 		const int SMALL_FIELD_HEIGHT = 166;
-		const int SMALL_FIELD_CELL_WIDTH = 13;
-		const int SMALL_FIELD_CELL_HEIGHT = 13;
-		const int SMALL_FIELD_CELL_GAP = 4;
 
+		int SMALL_FIELD_CELL_WIDTH = 13;
+		int SMALL_FIELD_CELL_HEIGHT = 13;
+		int SMALL_FIELD_CELL_GAP = 4;
+
+		if (!_controller.ExtendedMap) 
+		{
+			 SMALL_FIELD_CELL_WIDTH = 13;
+			 SMALL_FIELD_CELL_HEIGHT = 13;
+			 SMALL_FIELD_CELL_GAP = 4;
+		} else 
+		{
+			SMALL_FIELD_CELL_WIDTH = 6;
+			SMALL_FIELD_CELL_HEIGHT = 6;
+			SMALL_FIELD_CELL_GAP = 2;
+		}
 		DrawCustomField(grid, thePlayer, true, true, SMALL_FIELD_LEFT, SMALL_FIELD_TOP, SMALL_FIELD_WIDTH, SMALL_FIELD_HEIGHT, SMALL_FIELD_CELL_WIDTH, SMALL_FIELD_CELL_HEIGHT, SMALL_FIELD_CELL_GAP);
+	}
+
+	public void UpdateGameSize()
+	{
+		if(!_controller.ExtendedMap)
+		{
+			CELL_WIDTH = 40;
+			CELL_HEIGHT = 40;
+			CELL_GAP = 2;
+		}
+		else
+		{
+			CELL_WIDTH = 20;
+			CELL_HEIGHT = 20;
+			CELL_GAP = 1;
+		}
 	}
 
 	/// <summary>
@@ -117,11 +151,11 @@ public class ScreenController
 		int colLeft = 0;
 
 		//Draw the grid
-		for (int row = 0; row <= 9; row++)
+		for (int row = 0; row <= grid.Width - 1; row++)
 		{
 			rowTop = top + (cellGap + cellHeight) * row;
 
-			for (int col = 0; col <= 9; col++)
+			for (int col = 0; col <= grid.Height - 1; col++)
 			{
 				colLeft = left + (cellGap + cellWidth) * col;
 

@@ -20,14 +20,8 @@
     <PlatformTarget>x86</PlatformTarget>
     <CustomCommands>
       <CustomCommands>
-        <Command>
-          <type>AfterBuild</type>
-          <command>xcopy /q /b /y ${ProjectDir}\lib\win\*.dll ${TargetDir}</command>
-        </Command>
-        <Command>
-          <type>AfterBuild</type>
-          <command>xcopy /q /b /y /s ${ProjectDir}\Resources ${TargetDir}\Resources\</command>
-        </Command>
+        <Command type="AfterBuild" command="xcopy /q /b /y ${ProjectDir}\lib\win\*.dll ${TargetDir}" />
+        <Command type="AfterBuild" command="xcopy /q /b /y /s ${ProjectDir}\Resources ${TargetDir}\Resources\" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -78,7 +72,7 @@
     <MonoDevelop>
       <Properties>
         <Policies>
-          <TextStylePolicy TabWidth="4" IndentWidth="4" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" FileWidth="120" TabsToSpaces="False" EolMarker="Windows" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
+          <TextStylePolicy FileWidth="120" TabsToSpaces="False" EolMarker="Windows" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
         </Policies>
       </Properties>
     </MonoDevelop>

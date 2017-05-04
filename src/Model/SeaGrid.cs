@@ -11,10 +11,10 @@ using System.Collections.Generic;
 /// </remarks>
 public class SeaGrid : ISeaGrid
 {
-	private const int _WIDTH = 10;
-	private const int _HEIGHT = 10;
+	private static int _WIDTH;// = 10;
+	private static int _HEIGHT;// = 10;
 
-	private Tile[,] _GameTiles = new Tile[_WIDTH, _HEIGHT];
+	private Tile[,] _GameTiles;// = new Tile[_WIDTH, _HEIGHT];
 	private Dictionary<ShipName, Ship> _Ships;
 	private int _ShipsKilled = 0;
 
@@ -22,6 +22,7 @@ public class SeaGrid : ISeaGrid
 	/// The sea grid has changed and should be redrawn.
 	/// </summary>
 	public event EventHandler Changed;
+
 
 	/// <summary>
 	/// The width of the sea grid.
@@ -33,6 +34,11 @@ public class SeaGrid : ISeaGrid
 		get
 		{
 			return _WIDTH;
+		}
+		set 
+		{
+			_WIDTH = value;
+			Tile[,] _GameTiles = new Tile[_WIDTH, _HEIGHT];
 		}
 	}
 
@@ -46,6 +52,12 @@ public class SeaGrid : ISeaGrid
 		get
 		{
 			return _HEIGHT;
+		}
+		set 
+		{
+			_HEIGHT = value;
+			//_GameTiles = new Tile[_WIDTH, _HEIGHT];
+			Tile[,] _GameTiles = new Tile[_WIDTH, _HEIGHT];
 		}
 	}
 
@@ -93,8 +105,13 @@ public class SeaGrid : ISeaGrid
 	/// <summary>
 	/// SeaGrid constructor, a seagrid has a number of tiles stored in an array
 	/// </summary>
-	public SeaGrid(Dictionary<ShipName, Ship> ships)
+	public SeaGrid(Dictionary<ShipName, Ship> ships, int widthTemp = 10, int heightTemp = 10)
 	{
+		_WIDTH = widthTemp;
+		_HEIGHT = heightTemp;
+
+		_GameTiles = new Tile[_WIDTH, _HEIGHT];
+
 		//fill array with empty Tiles
 		int i = 0;
 		for (i = 0; i < Width; i++)
@@ -104,7 +121,6 @@ public class SeaGrid : ISeaGrid
 				_GameTiles[i, j] = new Tile(i, j, null);
 			}
 		}
-
 		_Ships = ships;
 	}
 

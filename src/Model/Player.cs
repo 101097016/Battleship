@@ -9,11 +9,13 @@ using System.Collections.Generic;
 public class Player : IEnumerable<Ship>
 {
 	private bool InstanceFieldsInitialized = false;
+	private bool IsExtendedMap = false;
 
 	private void InitializeInstanceFields()
 	{
 		_Ships = new Dictionary<ShipName, Ship>();
-		_playerGrid = new SeaGrid(_Ships);
+		GenerateNewGrid ();
+		//_playerGrid = new SeaGrid(_Ships);
 	}
 
 	protected static Random _Random = new Random();
@@ -26,6 +28,19 @@ public class Player : IEnumerable<Ship>
 	private int _shots;
 	private int _hits;
 	private int _misses;
+
+	public void GenerateNewGrid()
+	{
+		if (!IsExtendedMap) 
+		{
+			SeaGrid newGrid = new SeaGrid (_Ships, 10, 10);
+			_playerGrid = newGrid;
+		} else 
+		{
+			SeaGrid newGrid = new SeaGrid (_Ships, 20, 20);
+			_playerGrid = newGrid;
+		}
+	}
 
 	/// <summary>
 	/// Returns the game that the player is part of.
@@ -56,8 +71,9 @@ public class Player : IEnumerable<Ship>
 		}
 	}
 
-	public Player(BattleShipsGame controller)
+	public Player(BattleShipsGame controller, bool isExtendedMapTemp)
 	{
+		IsExtendedMap = isExtendedMapTemp;
 		if (!InstanceFieldsInitialized)
 		{
 			InitializeInstanceFields();
@@ -100,6 +116,10 @@ public class Player : IEnumerable<Ship>
 		get
 		{
 			return _playerGrid;
+		}
+		set 
+		{
+			_playerGrid = value;
 		}
 	}
 

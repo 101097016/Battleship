@@ -25,12 +25,28 @@ public sealed class GameController
 	private EndingGameController _endingGameController;
 	private HighScoreController _highScoreController;
 
+	private bool _isExtendedMap = false;
+
 	internal ScreenController screenController
 	{
-		get { return _screenController; }	}
+		get { return _screenController; }
+	}
 	internal HighScoreController highScoreController
 	{
 		get { return _highScoreController; }
+	}
+
+	//Checks whether its the extended map game
+	public bool ExtendedMap 
+	{
+		get 
+		{
+			return _isExtendedMap;
+		}
+		set 
+		{
+			_isExtendedMap = value;
+		}
 	}
 
 	/// <summary>
@@ -147,17 +163,17 @@ public sealed class GameController
 		switch (_aiSetting)
 		{
 			case AIOption.Medium:
-				_ai = new AIMediumPlayer(_theGame);
+				_ai = new AIMediumPlayer(_theGame, _isExtendedMap);
 				break;
 			case AIOption.Hard:
-				_ai = new AIHardPlayer(_theGame);
+				_ai = new AIHardPlayer(_theGame, _isExtendedMap);
 				break;
 			default:
-				_ai = new AIHardPlayer(_theGame);
+				_ai = new AIHardPlayer(_theGame, _isExtendedMap);
 				break;
 		}
 
-		_human = new Player(_theGame);
+		_human = new Player(_theGame, _isExtendedMap);
 
 		//AddHandler _human.PlayerGrid.Changed, AddressOf GridChanged
 		_ai.PlayerGrid.Changed += GridChanged;

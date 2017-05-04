@@ -124,7 +124,7 @@ public class AIHardPlayer : AIPlayer
 	/// it also checks if ships are destroyed.
 	/// </summary>
 	/// <param name="game">Game.</param>
-	public AIHardPlayer(BattleShipsGame game) : base(game)
+	public AIHardPlayer(BattleShipsGame game, bool isExtendedMapTemp) : base(game, isExtendedMapTemp)
 	{
 	}
 

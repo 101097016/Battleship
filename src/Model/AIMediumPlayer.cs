@@ -31,7 +31,7 @@ public class AIMediumPlayer : AIPlayer
 	/// it also checks if ships are destroyed.
 	/// </summary>
 	/// <param name="controller">Controller.</param>
-	public AIMediumPlayer(BattleShipsGame controller) : base(controller)
+	public AIMediumPlayer(BattleShipsGame controller, bool isExtendedMapTemp) : base(controller, isExtendedMapTemp)
 	{
 	}
 

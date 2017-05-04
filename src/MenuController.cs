@@ -21,7 +21,7 @@ public class MenuController
 		new string[] {"PLAY", "DIFFICULTY", "THEME", "SCORES", "QUIT"},
 		new string[] {"RETURN", "SURRENDER", "QUIT"},
 		new string[] {"EASY", "MEDIUM", "HARD"},
-		new string[] {"DEFAULT", "PIRATE"}
+		new string[] {"DEFAULT", "PIRATE","DEFAULT+", "PIRATE+"}
 	};
 
 	protected const int MENU_TOP = 575;
@@ -50,7 +50,9 @@ public class MenuController
 
 	protected const int THEMES_MENU_THEME_DEFAULT_BUTTON = 0;
 	protected const int THEMES_MENU_THEME_PIRATE_BUTTON = 1;
-	protected const int THEMES_MENU_EXIT_BUTTON = 2;
+	protected const int THEMES_MENU_THEME_DEFAULT_BUTTON_EXTENDED = 2;
+	protected const int THEMES_MENU_THEME_PIRATE_BUTTON_EXTENDED = 3;
+	protected const int THEMES_MENU_EXIT_BUTTON = 5;
 
 	protected const int GAME_MENU_RETURN_BUTTON = 0;
 	protected const int GAME_MENU_SURRENDER_BUTTON = 1;
@@ -329,13 +331,29 @@ public class MenuController
 	{
 		switch (button)
 		{
-			case THEMES_MENU_THEME_DEFAULT_BUTTON:
-				_controller.Resources.FreeResources();
+		case THEMES_MENU_THEME_DEFAULT_BUTTON:
+				_controller.Resources.FreeResources ();
+				_controller.ExtendedMap = false;
 				_controller.Resources = new GameResources("ThemeDefault");
+				_controller.screenController.UpdateGameSize ();
 				break;
 			case THEMES_MENU_THEME_PIRATE_BUTTON:
+				_controller.Resources.FreeResources ();
+				_controller.ExtendedMap = false;
+				_controller.Resources = new GameResources ("ThemePirate");
+				_controller.screenController.UpdateGameSize ();
+				break;
+			case THEMES_MENU_THEME_DEFAULT_BUTTON_EXTENDED:
 				_controller.Resources.FreeResources();
-				_controller.Resources = new GameResources("ThemePirate");
+				_controller.ExtendedMap = true;
+				_controller.Resources = new GameResources("ThemeDefaultPlus");
+				_controller.screenController.UpdateGameSize ();
+				break;
+			case THEMES_MENU_THEME_PIRATE_BUTTON_EXTENDED:
+				_controller.Resources.FreeResources();
+				_controller.ExtendedMap = true;
+				_controller.Resources = new GameResources("ThemePiratePlus");
+				_controller.screenController.UpdateGameSize ();
 				break;
 		}
 		//Always end state - handles cancel button as well

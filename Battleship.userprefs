@@ -1,4 +1,4 @@
-﻿<Properties StartupConfiguration="{D678850E-0D2D-40AE-AAA7-17D54614702B}|Default" VersionControlDisabled="True">
+﻿<Properties StartupConfiguration="{D678850E-0D2D-40AE-AAA7-17D54614702B}|Default" VersionControlDisabled="True" RefactoringSettings.EnableRefactorings="True" StartupItem="Battleship.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -11,5 +11,4 @@
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Battleship PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

@@ -105,7 +105,7 @@ public abstract class AIPlayer : Player
 	/// Initializes a new instance of the <see cref="T:AIPlayer"/> class.
 	/// </summary>
 	/// <param name="game">Game.</param>
-	protected AIPlayer(BattleShipsGame game) : base(game)
+	protected AIPlayer(BattleShipsGame game, bool isExtendedMap) : base(game, isExtendedMap)
 	{
 	}
 

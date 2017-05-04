@@ -7,7 +7,6 @@ using System.Collections.Generic;
 /// </summary>
 public class GameResources
 {
-
 	private void LoadFonts()
 	{
 		NewFont("ArialLarge", "arial.ttf", 80);
@@ -20,6 +19,7 @@ public class GameResources
 	{
 		//Backgrounds
 		NewImage("Menu", "main_page.jpg");
+
 		NewImage("Discovery", "discover.jpg");
 		NewImage("Deploy", "deploy.jpg");
 
