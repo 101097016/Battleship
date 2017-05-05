@@ -19,6 +19,12 @@ public class AIEasyPlayer : AIPlayer
 		} while ((row < 0 || column < 0 || row >= EnemyGrid.Height || column >= EnemyGrid.Width || EnemyGrid.Item (row, column) != TileView.Sea));
 	}
 
+	/// <summary>
+	/// randomly shots within the grid as long as it does not hit that tile already
+	/// </summary>
+	/// <param name="row">generated row</param>
+	/// <param name="column">generated column</param>
+
 
 	private void SearchCoords (ref int row, ref int column)
 	{
