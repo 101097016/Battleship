@@ -9,7 +9,7 @@ using SwinGameSDK;
 /// </summary>
 public sealed class GameController
 	// Declaring the variable for soundoff.
-{	private sttaic bool _musicoff;
+{	private static bool _musicoff;
 	private BattleShipsGame _theGame;
 	private Player _human;
 	private AIPlayer _ai;
