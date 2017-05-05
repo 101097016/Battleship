@@ -16,6 +16,7 @@ public sealed class GameController
 	private Stack<GameState> _state = new Stack<GameState>();
 
 	private AIOption _aiSetting;
+	private AIOption _aiReset;
 
 	private GameResources _resources;
 	private ScreenController _screenController;
@@ -144,6 +145,7 @@ public sealed class GameController
 		_state.Push(GameState.ViewingMainMenu);
 	}
 
+
 	/// <summary>
 	/// Starts a new game.
 	/// </summary>
@@ -164,13 +166,16 @@ public sealed class GameController
 		{
 			case AIOption.Medium:
 				_ai = new AIMediumPlayer(_theGame, _isExtendedMap);
+				_aiReset = AIOption.Medium;
 				break;
 			case AIOption.Hard:
 				_ai = new AIHardPlayer(_theGame, _isExtendedMap);
+				_aiReset = AIOption.Hard;
 				break;
 			default:
 				_ai = new AIHardPlayer(_theGame, _isExtendedMap);
-				break;
+				_aiReset = AIOption.Hard;
+			break;
 		}
 
 		_human = new Player(_theGame, _isExtendedMap);
@@ -180,6 +185,33 @@ public sealed class GameController
 		_theGame.AttackCompleted += AttackCompleted;
 
 		AddNewState(GameState.Deploying);
+	}
+
+	public void ResetGame()
+	{
+		_human.Reset();
+		EndCurrentState();
+		EndGame();
+		_theGame = new BattleShipsGame();
+
+		if (_aiReset == AIOption.Medium)
+		{
+			_ai = new AIMediumPlayer(_theGame, _isExtendedMap);
+		}
+		else if (_aiReset == AIOption.Hard)
+		{
+			_ai = new AIHardPlayer(_theGame, _isExtendedMap);
+		}
+		else 
+		{
+			_ai = new AIMediumPlayer(_theGame, _isExtendedMap); //Change to Easy when implemented
+		}
+
+		_ai.PlayerGrid.Changed += GridChanged;
+		_theGame.AttackCompleted += AttackCompleted;
+		_theGame.ResetDeployment(_ai, _human);
+
+		AddNewState(GameState.Discovering);
 	}
 
 	/// <summary>
@@ -390,6 +422,12 @@ public sealed class GameController
 			case GameState.Discovering:
 				_discoveryController.HandleDiscoveryInput();
 				break;
+			case GameState.Reset:
+				_discoveryController.HandleDiscoveryInput();
+				break;				
+			case GameState.Cheat:
+				_discoveryController.HandleDiscoveryInput();
+				break;
 			case GameState.EndingGame:
 				_endingGameController.HandleEndOfGameInput();
 				break;
@@ -431,6 +469,12 @@ public sealed class GameController
 			case GameState.Discovering:
 				_discoveryController.DrawDiscovery();
 				break;
+			case GameState.Reset:
+				_discoveryController.DrawDiscovery();
+				break;
+			case GameState.Cheat:
+				_discoveryController.DrawDiscoveryCheat();
+				break;	
 			case GameState.EndingGame:
 				_endingGameController.DrawEndOfGame();
 				break;

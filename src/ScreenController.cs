@@ -289,8 +289,14 @@ public class ScreenController
 			case GameState.EndingGame:
 				SwinGame.DrawBitmap(_controller.Resources.GameImage("Discovery"), 0, 0);
 				break;
+			case GameState.Reset:
+				SwinGame.DrawBitmap(_controller.Resources.GameImage("Discovery"), 0, 0);
+				break;
 			case GameState.Deploying:
 				SwinGame.DrawBitmap(_controller.Resources.GameImage("Deploy"), 0, 0);
+				break;
+			case GameState.Cheat:
+				SwinGame.DrawBitmap(_controller.Resources.GameImage("Discovery"), 0, 0);
 				break;
 			default:
 				SwinGame.ClearScreen();

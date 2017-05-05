@@ -46,6 +46,10 @@ public enum GameState
 	/// </summary>
 	EndingGame,
 
+	Cheat,
+
+	Reset,
+
 	/// <summary>
 	/// The player has quit. Show ending credits and terminate the game
 	/// </summary>

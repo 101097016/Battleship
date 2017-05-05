@@ -26,6 +26,16 @@ public class DiscoveryController
 		{
 			DoAttack();
 		}
+
+		if (_controller.CurrentState != GameState.Cheat && SwinGame.KeyDown(KeyCode.vk_c))
+		{
+			_controller.AddNewState(GameState.Cheat);
+		}
+
+		if (_controller.CurrentState == GameState.Discovering && SwinGame.KeyDown(KeyCode.vk_r))
+		{
+			_controller.ResetGame();
+		}
 	}
 
 	/// <summary>
@@ -35,6 +45,10 @@ public class DiscoveryController
 	{
 		Point2D mouse = SwinGame.MousePosition();
 
+		if (_controller.CurrentState == GameState.Cheat && SwinGame.MouseClicked(MouseButton.LeftButton))
+		{
+			_controller.EndCurrentState();
+		}
 
 		//Calculate the row/col clicked
 		int row = 0;
@@ -73,6 +87,31 @@ public class DiscoveryController
 		_controller.screenController.DrawSmallField(_controller.HumanPlayer.PlayerGrid, _controller.HumanPlayer);
 		_controller.screenController.DrawMessage();
 
+		SwinGame.DrawText(_controller.HumanPlayer.Shots.ToString(), Color.White, _controller.Resources.GameFont("Menu"), SCORES_LEFT, SHOTS_TOP);
+		SwinGame.DrawText(_controller.HumanPlayer.Hits.ToString(), Color.White, _controller.Resources.GameFont("Menu"), SCORES_LEFT, HITS_TOP);
+		SwinGame.DrawText(_controller.HumanPlayer.Missed.ToString(), Color.White, _controller.Resources.GameFont("Menu"), SCORES_LEFT, SPLASH_TOP);
+	}
+
+	public virtual void DrawDiscoveryCheat()
+	{
+		const int SCORES_LEFT = 172;
+		const int SHOTS_TOP = 157;
+		const int HITS_TOP = 206;
+		const int SPLASH_TOP = 256;
+
+		if ((SwinGame.KeyDown(KeyCode.vk_LSHIFT) || SwinGame.KeyDown(KeyCode.vk_RSHIFT)) && SwinGame.KeyDown(KeyCode.vk_c))
+		{
+			_controller.screenController.DrawField(_controller.HumanPlayer.EnemyGrid, _controller.ComputerPlayer, true);
+		}
+		else
+		{
+			_controller.screenController.DrawField(_controller.HumanPlayer.EnemyGrid, _controller.ComputerPlayer, true);
+		}
+
+		_controller.screenController.DrawSmallField(_controller.HumanPlayer.PlayerGrid, _controller.HumanPlayer);
+		_controller.screenController.DrawMessage();
+
+		SwinGame.DrawTextLines("CHEATER!!!!!!", Color.Red, Color.Transparent, _controller.Resources.GameFont("ArialLarge"), FontAlignment.AlignCenter, 0, 250, SwinGame.ScreenWidth(), SwinGame.ScreenHeight());
 		SwinGame.DrawText(_controller.HumanPlayer.Shots.ToString(), Color.White, _controller.Resources.GameFont("Menu"), SCORES_LEFT, SHOTS_TOP);
 		SwinGame.DrawText(_controller.HumanPlayer.Hits.ToString(), Color.White, _controller.Resources.GameFont("Menu"), SCORES_LEFT, HITS_TOP);
 		SwinGame.DrawText(_controller.HumanPlayer.Missed.ToString(), Color.White, _controller.Resources.GameFont("Menu"), SCORES_LEFT, SPLASH_TOP);
