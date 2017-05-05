@@ -174,7 +174,16 @@ public class ScreenController
 						}
 						else
 						{
-							fillColor = LARGE_MISS;
+                            if (!BattleShipsGame.NightMare)
+                            {
+                                fillColor = LARGE_MISS;
+                            }
+
+                            else
+                            {
+                                //draw = false;
+                                fillColor = LARGE_HIT;
+                            }
 						}
 						break;
 					case TileView.Hit:

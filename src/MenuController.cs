@@ -18,7 +18,7 @@ public class MenuController
 	/// </remarks>
 	protected static readonly string[][] _menuStructure =
 	{
-		new string[] {"PLAY", "DIFFICULTY", "THEME", "SCORES", "QUIT"},
+		new string[] {"PLAY", "DIFFICULTY", "  NIGHTMARE", "THEME", "SCORES", "QUIT"},
 		new string[] {"RETURN", "RESET", "CHEAT", "SURRENDER", "QUIT"},
 		new string[] {"EASY", "MEDIUM", "HARD"},
 		new string[] {"DEFAULT", "PIRATE","DEFAULT+", "PIRATE+"}
@@ -38,10 +38,11 @@ public class MenuController
 	protected const int THEMES_MENU = 3;
 
 	protected const int MAIN_MENU_PLAY_BUTTON = 0;
-	protected const int MAIN_MENU_SETUP_BUTTON = 1;
-	protected const int MAIN_MENU_THEMES_BUTTON = 2;
-	protected const int MAIN_MENU_TOP_SCORES_BUTTON = 3;
-	protected const int MAIN_MENU_QUIT_BUTTON = 4;
+    protected const int MAIN_MENU_SETUP_BUTTON = 1;
+    protected const int MAIN_MENU_NIGHTMARE_BUTTON = 2;
+    protected const int MAIN_MENU_THEMES_BUTTON = 3;
+	protected const int MAIN_MENU_TOP_SCORES_BUTTON = 4;
+	protected const int MAIN_MENU_QUIT_BUTTON = 5;
 
 	protected const int SETUP_MENU_EASY_BUTTON = 0;
 	protected const int SETUP_MENU_MEDIUM_BUTTON = 1;
@@ -149,10 +150,15 @@ public class MenuController
 	/// </summary>
 	public void DrawMainMenu()
 	{
-		//Clears the Screen to Black
-		//SwinGame.DrawText("Main Menu", Color.White, GameFont("ArialLarge"), 50, 50)
-		SwinGame.DrawText("Difficulty: " + Difficulty, Color.Red, 500, 585);
-		DrawButtons(MAIN_MENU);
+        //Clears the Screen to Black
+        //SwinGame.DrawText("Main Menu", Color.White, GameFont("ArialLarge"), 50, 50)
+        SwinGame.DrawText("Difficulty: " + Difficulty, Color.Red, 500, 585);
+
+        if (BattleShipsGame.NightMare)
+        {
+            SwinGame.DrawText("!!NIGHTMARE!!", Color.Red, 500, 560);
+        }
+        DrawButtons(MAIN_MENU);
 	}
 
 	/// <summary>
@@ -299,10 +305,13 @@ public class MenuController
 			case MAIN_MENU_TOP_SCORES_BUTTON:
 				_controller.AddNewState(GameState.ViewingHighScores);
 				break;
-			case MAIN_MENU_QUIT_BUTTON:
-				_controller.EndCurrentState();
-				break;
-		}
+            case MAIN_MENU_QUIT_BUTTON:
+                _controller.EndCurrentState();
+                break;
+            case MAIN_MENU_NIGHTMARE_BUTTON:
+                BattleShipsGame.NightMare = !BattleShipsGame.NightMare;
+                break;
+        }
 	}
 
 	/// <summary>

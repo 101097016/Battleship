@@ -6,11 +6,19 @@
 /// </summary> 
 public abstract class AIPlayer : Player
 {
-	/// <summary>
-	/// Location can store the location of the last hit made by an
-	/// AI Player. The use of which determines the difficulty.
-	/// </summary>
-	protected class Location
+    /// <summary>
+    /// The numeric value for the AI's difficulty
+    /// </summary>
+    public virtual int Difficulty
+    {
+        get;
+    }
+
+    /// <summary>
+    /// Location can store the location of the last hit made by an
+    /// AI Player. The use of which determines the difficulty.
+    /// </summary>
+    protected class Location
 	{
 		private int _Row;
 		private int _Column;

@@ -192,7 +192,9 @@ public sealed class GameController
 		_human.Reset(_isExtendedMap);
 		EndCurrentState();
 		EndGame();
+
 		_theGame = new BattleShipsGame();
+
 
 		if (_aiReset == AIOption.Medium)
 		{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// // The BattleShipsGame controls a big part of the game. It will add the two players
@@ -8,6 +9,8 @@
 /// </summary>
 public class BattleShipsGame
 {
+    private Dictionary<string,uint> _counters = new Dictionary<string, uint>() { { "shots fired", 0 } };
+    private const uint nightmareShotsForFiring = 2;
 
 	/// <summary>
 	/// The attack delegate type is used to send notifications of the end of an
@@ -21,7 +24,7 @@ public class BattleShipsGame
 	/// </summary> 
 	public event AttackCompletedHandler AttackCompleted;
 
-	private Player[] _players = new Player[3];
+	private Player[] _players = new Player[2];
 	private int _playerIndex = 0;
 
 	/// <summary>
@@ -36,6 +39,16 @@ public class BattleShipsGame
 			return _players[_playerIndex];
 		}
 	}
+
+    /// <summary>
+    /// Toggles whether nightmare features are enabled
+    /// </summary>
+    public static bool NightMare
+    {
+        get;
+
+        set;
+    }
 
 	/// <summary>
 	/// AddDeployedPlayer adds both players and will make sure
@@ -104,6 +117,49 @@ public class BattleShipsGame
 		{
 			_playerIndex = otherPlayer;
 		}
+
+        if (NightMare)
+        {
+            if (newAttack.Value != ResultOfAttack.ShotAlready)
+            {
+                _counters["shots fired"] += 1;
+            }
+
+            if (_counters["shots fired"] == nightmareShotsForFiring)
+            {
+                //fire randomly
+                Random randy = new Random();
+
+                int cycles = 1;
+
+                foreach (Player p in _players)
+                {
+                    if ((p as AIPlayer) != null)
+                    {
+                        if ((p as AIPlayer).Difficulty > cycles)
+                        {
+                            cycles = (p as AIPlayer).Difficulty;
+                        }
+                    }
+                }
+
+                int i = 0;
+                while (i < cycles)
+                {
+                    int rowSub = randy.Next(_players[0].PlayerGrid.Height);//Assumes all grids are of equal size [width, height]
+                    int colSub = randy.Next(_players[0].PlayerGrid.Width);
+
+                    foreach (Player p in _players)
+                    {
+                        p.Shoot(rowSub, colSub);
+                    }
+
+                    i += 1;
+                }
+
+                _counters["shots fired"] = 0;
+            }
+        }
 
 		return newAttack;
 	}

@@ -7,12 +7,21 @@ using System.Collections.Generic;
 /// </summary>
 public class AIMediumPlayer : AIPlayer
 {
-	/// <summary>
-	/// Private enumarator for AI states. currently there are two states,
-	/// the AI can be searching for a ship, or if it has found a ship it will
-	/// target the same ship
-	/// </summary>
-	private enum AIStates
+
+    public override int Difficulty
+    {
+        get
+        {
+            return 2;
+        }
+    }
+
+    /// <summary>
+    /// Private enumarator for AI states. currently there are two states,
+    /// the AI can be searching for a ship, or if it has found a ship it will
+    /// target the same ship
+    /// </summary>
+    private enum AIStates
 	{
 		Searching,
 		TargetingShip

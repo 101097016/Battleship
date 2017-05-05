@@ -10,6 +10,9 @@ static class GameLogic
 		//Load Resources
 		var resources = new GameResources("ThemeDefault", true);
 
+        //SetGlobals default
+        BattleShipsGame.NightMare = false;
+
 		//Game Loop
 		var controller = new GameController(resources: resources,
 											screenController: new ScreenController(),

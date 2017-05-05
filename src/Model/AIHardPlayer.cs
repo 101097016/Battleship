@@ -10,21 +10,29 @@ using System.Collections.Generic;
 /// </summary>
 public class AIHardPlayer : AIPlayer
 {
-	/// <summary>
-	/// Target allows the AI to know more things, for example the source of a
-	/// shot target. It's using the protected class Location from AIPlayer.cs to store
-	/// the rows and columns of the place where shot at.
-	/// </summary>
-	protected class Target
+    public override int Difficulty
+    {
+        get
+        {
+            return 3;
+        }
+    }
+
+    /// <summary>
+    /// Target allows the AI to know more things, for example the source of a
+    /// shot target. It's using the protected class Location from AIPlayer.cs to store
+    /// the rows and columns of the place where shot at.
+    /// </summary>
+    protected class Target
 	{
 		private readonly Location _ShotAt;
 		private readonly Location _Source;
 
-		/// <summary>
-		/// The target shot at.
-		/// </summary>
-		/// <value>The shot at.</value>
-		public Location ShotAt
+        /// <summary>
+        /// The target shot at.
+        /// </summary>
+        /// <value>The shot at.</value>
+        public Location ShotAt
 		{
 			get
 			{
