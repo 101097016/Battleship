@@ -33,6 +33,13 @@ public class AIEasyPlayer : AIPlayer
 	}
 
 
+	/// <summary>
+	/// ProcessShot will be called upon when a ship is found.
+	/// </summary>
+	/// <param name="row">Not needed</param>
+	/// <param name="col">Not needed</param>
+	/// <param name="result">the result og the last shot (should be hit)</param>
+
 	protected override void ProcessShot (int row, int col, AttackResult result)
 	{
 		if (result.Value == ResultOfAttack.Hit) {
