@@ -67,7 +67,6 @@
     <Compile Include="src\Model\TileView.cs" />
     <Compile Include="src\LoadingScreen.cs" />
     <Compile Include="src\Model\AIEasyPlayer.cs" />
-    <Compile Include="AIEasyPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SwinGame">
