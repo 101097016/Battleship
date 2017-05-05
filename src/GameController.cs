@@ -8,7 +8,8 @@ using SwinGameSDK;
 /// game.
 /// </summary>
 public sealed class GameController
-{
+	// Declaring the variable for soundoff.
+{	private sttaic bool _musicoff;
 	private BattleShipsGame _theGame;
 	private Player _human;
 	private AIPlayer _ai;
@@ -35,6 +36,19 @@ public sealed class GameController
 	internal HighScoreController highScoreController
 	{
 		get { return _highScoreController; }
+	}
+ 	
+ 	//
+ 	public bool SoundOff
+	{
+		get
+		{
+			return _musicoff;
+		}
+		set
+		{
+			_musicoff = value;
+		}
 	}
 
 	//Checks whether its the extended map game
@@ -403,6 +417,22 @@ public sealed class GameController
 	{
 		//Read incoming input events
 		SwinGame.ProcessEvents();
+		
+		//Condition, When spaces is pressed, music turned off.
+		if (SwinGame.KeyTyped (KeyCode.vk_SPACE)) 
+		{
+			if (SoundOff) 
+			{
+				SwinGame.PauseMusic ();
+			}
+			else
+			{
+				SwinGame.ResumeMusic ();
+			}
+
+			SoundOff = !SoundOff;
+		}
+		
 
 		switch (CurrentState)
 		{
