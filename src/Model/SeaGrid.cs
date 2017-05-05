@@ -203,39 +203,39 @@ public class SeaGrid : ISeaGrid
 	/// <param name="row">the row at which is being shot</param>
 	/// <param name="col">the cloumn at which is being shot</param>
 	/// <returns>An attackresult (hit, miss, sunk, shotalready)</returns>
+	///Message has been corrected by Jay Kasawn.
+	
 	public AttackResult HitTile(int row, int col)
 	{
-		try
+	try
+	{
+	//tile already hit.
+	if (_GameTiles[row, col].Shot)
+	{
+		return new AttackResult(ResultOfAttack.ShotAlready, "have already attacked..!! [" + (col + 1) + "," + (row + 1) + "]!", row, col);
+	}
+
+	_GameTiles[row, col].Shoot();
+
+	//there is no ship on the tile
+	if (_GameTiles[row, col].Ship == null)
+	{
+		return new AttackResult(ResultOfAttack.Miss, "missed", row, col);
+	}
+		//all ship's tiles have been destroyed
+		if (_GameTiles[row, col].Ship.IsDestroyed)
 		{
-			//tile is already hit
-			if (_GameTiles[row, col].Shot)
-			{
-				return new AttackResult(ResultOfAttack.ShotAlready, "have already attacked [" + col + "," + row + "]!", row, col);
-			}
-
-			_GameTiles[row, col].Shoot();
-
-			//there is no ship on the tile
-			if (_GameTiles[row, col].Ship == null)
-			{
-				return new AttackResult(ResultOfAttack.Miss, "missed", row, col);
-			}
-
-			//all ship's tiles have been destroyed
-			if (_GameTiles[row, col].Ship.IsDestroyed)
-			{
-				_GameTiles[row, col].Shot = true;
-				_ShipsKilled += 1;
-				return new AttackResult(ResultOfAttack.Destroyed, _GameTiles[row, col].Ship, "destroyed the enemy's", row, col);
-			}
-
-			//else hit but not destroyed
-			return new AttackResult(ResultOfAttack.Hit, "hit something!", row, col);
+			_GameTiles[row, col].Shot = true;
+			_ShipsKilled += 1;
+			return new AttackResult(ResultOfAttack.Destroyed, _GameTiles[row, col].Ship, "destroyed the enemy's", row, col);
+		}
+		//else hit but not destroyed
+		return new AttackResult(ResultOfAttack.Hit, "hit something!", row, col);
 		}
 		finally
 		{
-			if (Changed != null)
-				Changed(this, EventArgs.Empty);
+		if (Changed != null)
+		Changed(this, EventArgs.Empty);
 		}
 	}
 }
