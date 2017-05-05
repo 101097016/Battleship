@@ -187,6 +187,9 @@ public sealed class GameController
 				_ai = new AIHardPlayer(_theGame, _isExtendedMap);
 				_aiReset = AIOption.Hard;
 				break;
+			case AIOption.Easy:
+			_ai = new AIEasyPlayer (_theGame, _isExtendedMap);
+			_aiReset = AIOption.Easy;
 			default:
 				_ai = new AIHardPlayer(_theGame, _isExtendedMap);
 				_aiReset = AIOption.Hard;
@@ -218,6 +221,10 @@ public sealed class GameController
 		else if (_aiReset == AIOption.Hard)
 		{
 			_ai = new AIHardPlayer(_theGame, _isExtendedMap);
+		}
+		else if (_aiReset == AIOption.Easy)
+		{
+			_ai = new AIEasyPlayer (_theGame, _isExtendedMap);
 		}
 		else 
 		{
