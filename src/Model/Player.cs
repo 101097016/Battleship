@@ -267,12 +267,19 @@ public class Player : IEnumerable<Ship>
 		return result;
 	}
 
-	public void Reset()
+	public void Reset(bool isExtendedMap)
 	{
 		_shots = 0;
 		_hits = 0;
 		_misses = 0;
-		_playerGrid = new SeaGrid(_Ships);
+		if (!isExtendedMap) 
+		{
+			_playerGrid = new SeaGrid (_Ships);
+		} 
+		else 
+		{
+			_playerGrid = new SeaGrid (_Ships, 20, 20);
+		}
 	}
 
 	public virtual void RandomizeDeployment()

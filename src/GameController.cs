@@ -189,7 +189,7 @@ public sealed class GameController
 
 	public void ResetGame()
 	{
-		_human.Reset();
+		_human.Reset(_isExtendedMap);
 		EndCurrentState();
 		EndGame();
 		_theGame = new BattleShipsGame();
