@@ -1,22 +1,22 @@
 ﻿using System;
 
-/// <summary>
-/// The different AI diffciulty levels.
-/// </summary>
-public enum AIOption
-{
 	/// <summary>
-	/// Easy, total random shooting
+	/// The different AI diffciulty levels.
 	/// </summary>
-	Easy,
+	public enum AIOption
+	{
+		/// <summary>
+		/// Easy, total random shooting
+		/// </summary>
+		Easy,
 
-	/// <summary>
-	/// Medium, marks squares around hits
-	/// </summary>
-	Medium,
+		/// <summary>
+		/// Medium, marks squares around hits
+		/// </summary>
+		Medium,
 
-	/// <summary>
-	/// As medium, but removes shots once it misses
-	/// </summary>
-	Hard
-}
+		/// <summary>
+		/// As medium, but removes shots once it misses
+		/// </summary>
+		Hard
+	}

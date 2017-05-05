@@ -190,6 +190,7 @@ public sealed class GameController
 			case AIOption.Easy:
 			_ai = new AIEasyPlayer (_theGame, _isExtendedMap);
 			_aiReset = AIOption.Easy;
+			break;
 			default:
 				_ai = new AIHardPlayer(_theGame, _isExtendedMap);
 				_aiReset = AIOption.Hard;
