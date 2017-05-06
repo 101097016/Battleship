@@ -119,7 +119,7 @@ public class Ship
 		{
 			tile.ClearShip();
 		}
-		_tiles.Clear();
+		//_tiles.Clear();
 	}
 
 	public void Hit()
