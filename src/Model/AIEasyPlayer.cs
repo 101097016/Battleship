@@ -12,7 +12,15 @@ public class AIEasyPlayer : AIPlayer
 {
 	public AIEasyPlayer (BattleShipsGame controller, bool isExtendedMapTemp) : base (controller , isExtendedMapTemp ) { }
 
-	protected override void GenerateCoords (ref int row, ref int column)
+    public override int Difficulty
+    {
+        get
+        {
+            return 1;
+        }
+    }
+
+    protected override void GenerateCoords (ref int row, ref int column)
 	{
 		do {
 			SearchCoords (ref row, ref column);
